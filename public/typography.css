@@ -1,0 +1,64 @@
+* {
+  font-family: iran-yekan;
+}
+
+/* Base typography */
+body {
+  font-family: iran-yekan;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Headings */
+h1 {
+  font-size: 1.9rem !important;
+  font-weight: bold !important;
+  margin-bottom: 0.8rem !important;
+}
+
+h2 {
+  font-size: 1.5rem !important;
+  font-weight: bold !important;
+  margin-bottom: 0.8rem !important;
+}
+
+h3 {
+  font-size: 1.25rem !important;
+  font-weight: bold !important;
+  margin-bottom: 0.6rem !important;
+}
+h4 {
+  font-size: 1rem !important;
+  font-weight: bold !important;
+  margin-bottom: 0.6rem !important;
+}
+
+/* Paragraphs */
+p {
+  margin-bottom: 1rem !important;
+}
+
+/* Links */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Typography */
+@media screen and (max-width: 768px) {
+  /* Adjust root font size for smaller screens */
+  html {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  /* Further adjust root font size for extra small screens */
+  html {
+    font-size: 12px;
+  }
+}
