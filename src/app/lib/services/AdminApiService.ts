@@ -1,10 +1,10 @@
-import axios from "axios";
-import config from "config";
+import axios from 'axios';
+import config from 'config';
 
 const axiosInstance = axios.create({
   baseURL: config.BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     // Add any other default headers here
   },
 });
@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 class AdminApiService {
   $axios = axiosInstance;
   async login(body: any) {
-    // return this.$axios.post()
+    return this.$axios.post('/');
   }
 }
 

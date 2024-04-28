@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 class CustomError extends Error {
   code: number;
@@ -11,11 +11,11 @@ class CustomError extends Error {
   }
 }
 
-import { AlertService, AuthApiService } from "@/app/lib/services";
-import { Form1 } from "@lib/components";
+import { AlertService, AuthApiService } from '@/app/lib/services';
+import { Form1 } from '@lib/components';
 
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 interface LoginProps {}
 
@@ -26,9 +26,10 @@ function Login() {
   const dispatch = useDispatch();
   const alertService = new AlertService(dispatch);
   const authApiService = new AuthApiService();
+  function handleSubmit() {}
   useEffect(() => {
     async function login() {
-      const result = await authApiService.login(body);
+      // const result = await authApiService.login(body);
       // throw new CustomError("LALA", 2020);
     }
     login();

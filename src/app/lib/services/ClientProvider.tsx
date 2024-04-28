@@ -1,11 +1,12 @@
-"use client";
-import { ReactNode, useEffect, useState } from "react";
-import { Provider as InversifyProvider } from "inversify-react";
-import container from "./inversify.config";
-import { Provider } from "react-redux";
-import store from "./store";
-import { ListAlerts } from "../components";
-import ErrorCatchService from "./ErrorCatchService";
+'use client';
+import { ReactNode, useEffect, useState } from 'react';
+import { Provider as InversifyProvider } from 'inversify-react';
+import container from './inversify.config';
+import { Provider } from 'react-redux';
+import store from './store';
+import { ListAlerts } from '../components';
+import ErrorCatchService from './ErrorCatchService';
+import Loading1 from '../components/leading/Loading1';
 
 interface ClientProviderProps {
   children: ReactNode;
@@ -16,9 +17,6 @@ function ClientProvider(props: ClientProviderProps) {
 
   useEffect(() => {
     setMounted(true);
-    window.addEventListener("unhandledrejection", (event) => {
-      console.log({ event });
-    });
   }, []);
 
   if (mounted)
@@ -27,8 +25,8 @@ function ClientProvider(props: ClientProviderProps) {
         <Provider store={store}>
           {props.children}
           <ListAlerts />
+          <Loading1 />
         </Provider>
-        <ErrorCatchService />
       </InversifyProvider>
     );
 

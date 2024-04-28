@@ -1,5 +1,5 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
 interface InitialValues {
   username: string;
@@ -7,13 +7,13 @@ interface InitialValues {
 }
 
 const initialValues: InitialValues = {
-  username: "",
-  password: "",
+  username: '',
+  password: '',
 };
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string().required("نام کاربری ضروری میباشد"),
-  password: Yup.string().required("رمز عبور ضروری میباشد"),
+  username: Yup.string().required('نام کاربری ضروری میباشد'),
+  password: Yup.string().required('رمز عبور ضروری میباشد'),
 });
 
 function Form1() {
