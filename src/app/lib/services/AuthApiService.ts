@@ -1,15 +1,26 @@
-import axios from "axios";
-import config from "config";
+import axios, { AxiosInstance } from 'axios';
+import config from 'config';
+import TokenStorageService from './TokenStorageService';
 
 const axiosInstance = axios.create({
-  baseURL: config.BASE_URL + "/auth",
+  baseURL: config.BASE_URL + '/auth',
 });
 
+type LoginResponse = {
+  accessToken: string;
+  refreshToken: string;
+};
+
 class AuthApiService {
-  $axios = axiosInstance;
-  constructor() {}
-  async login(body: any) {
-    return this.$axios.post("sing-in", body);
+  private $axios: AxiosInstance;
+
+  constructor() {
+    this.$axios = axiosInstance;
+  }
+  async login(body: any): Promise<LoginResponse> {
+    const result = await this.$axios.post('sing-in', body);
+
+    return result.data;
   }
 }
 

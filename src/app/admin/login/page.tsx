@@ -11,7 +11,12 @@ class CustomError extends Error {
   }
 }
 
-import { AlertService, AuthApiService } from '@/app/lib/services';
+import {
+  AlertService,
+  AuthApiService,
+  LoadingService,
+  TokenStorageService,
+} from '@/app/lib/services';
 import { Form1 } from '@lib/components';
 
 import React, { useEffect, useState } from 'react';
@@ -22,19 +27,30 @@ interface LoginProps {}
 interface LoginState {}
 
 function Login() {
-  const [body, setBody] = useState();
   const dispatch = useDispatch();
   const alertService = new AlertService(dispatch);
+  const loadingService = new LoadingService(dispatch);
   const authApiService = new AuthApiService();
-  function handleSubmit() {}
-  useEffect(() => {
-    async function login() {
-      // const result = await authApiService.login(body);
-      // throw new CustomError("LALA", 2020);
+  const tokenStorageService = new TokenStorageService();
+
+  async function handleSubmit(values: any) {
+    try {
+      loadingService.addPluse();
+
+      const result = await authApiService.login(values);
+
+      tokenStorageService.setAccessToken(result.accessToken);
+      tokenStorageService.setRefreshToken(result.refreshToken);
+
+      loadingService.removePluse();
+    } catch (error) {
+      loadingService.removePluse();
+      throw error;
     }
-    login();
-  }, []);
-  return <Form1 />;
+  }
+
+  useEffect(() => {}, []);
+  return <Form1 handleFormSubmit={handleSubmit} />;
 }
 
 export default Login;

@@ -1,6 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
+interface Form1Props {
+  handleFormSubmit: (values: InitialValues) => void;
+}
 interface InitialValues {
   username: string;
   password: string;
@@ -16,7 +19,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required('رمز عبور ضروری میباشد'),
 });
 
-function Form1() {
+function Form1(props: Form1Props) {
   return (
     <section className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-4xl  p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800">
       <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">
@@ -27,7 +30,7 @@ function Form1() {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          console.log(values);
+          props.handleFormSubmit(values);
         }}
       >
         {({ isSubmitting }: { isSubmitting: boolean }) => (
@@ -76,7 +79,7 @@ function Form1() {
             <div className="flex justify-end mt-6">
               <button
                 type="submit"
-                disabled={isSubmitting}
+                // disabled={isSubmitting}
                 className="px-8 py-2.5 leading-5 text-white transition-colors duration-300 transhtmlForm bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
               >
                 ورود

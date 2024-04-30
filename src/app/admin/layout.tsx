@@ -1,31 +1,29 @@
-"use client";
-import React, { ReactNode, useEffect, useState } from "react";
-import { AdminSideBar } from "@lib/components";
+'use client';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { AdminSideBar } from '@lib/components';
 
-import { usePathname } from "next/navigation";
-import isPathInArray from "@lib/services/isPathInArray";
+import { usePathname } from 'next/navigation';
+import isPathInArray from '@lib/services/isPathInArray';
+import ContextProvider, {
+  AdminLocalContextAction,
+  useAdminLocalContext,
+} from './admin.context';
 
-const PATHS = ["login"];
+const PATHS = ['login'];
 interface RootProps {
   children: ReactNode;
 }
-type ShouldRenderSharedUi = boolean;
 
-function RootLayout(props: RootProps) {
-  const [state, setState] = useState<ShouldRenderSharedUi>(false);
-  const pathname = usePathname();
+export default function RootLayout(props: RootProps) {
+  // const { state ,dispatch} = useAdminLocalContext();
+  // const pathname = usePathname();
+  // state.shouldRenderSharedSideBar;
+  // useEffect(() => {
+  //   const result = isPathInArray(pathname, PATHS);
+  //   if(result){
+  //     dispatch(AdminLocalContextAction.)
+  //   }
+  // });
 
-  useEffect(() => {
-    const result = isPathInArray(pathname, PATHS);
-    setState(result);
-  });
-
-  return (
-    <main className="flex w-full h-screen">
-      {!state && <AdminSideBar />}
-      <div className="pt-4 px-2 w-full">{props.children}</div>
-    </main>
-  );
+  return <ContextProvider>{props.children}</ContextProvider>;
 }
-
-export default RootLayout;

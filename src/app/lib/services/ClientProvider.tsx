@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import { ListAlerts } from '../components';
 import ErrorCatchService from './ErrorCatchService';
-import Loading1 from '../components/leading/Loading1';
+import PulseLoader from '../components/leading/PulseLoader';
 
 interface ClientProviderProps {
   children: ReactNode;
@@ -25,7 +25,7 @@ function ClientProvider(props: ClientProviderProps) {
         <Provider store={store}>
           {props.children}
           <ListAlerts />
-          <Loading1 />
+          <PulseLoader />
         </Provider>
       </InversifyProvider>
     );
