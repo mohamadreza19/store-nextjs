@@ -1,22 +1,20 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+"use client";
+import { LoginFormikValues } from "@/app/admin/interfaces";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 interface Form1Props {
-  handleFormSubmit: (values: InitialValues) => void;
-}
-interface InitialValues {
-  username: string;
-  password: string;
+  handleFormSubmit: (values: LoginFormikValues) => void;
 }
 
-const initialValues: InitialValues = {
-  username: '',
-  password: '',
+const initialValues: LoginFormikValues = {
+  username: "",
+  password: "",
 };
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string().required('نام کاربری ضروری میباشد'),
-  password: Yup.string().required('رمز عبور ضروری میباشد'),
+  username: Yup.string().required("نام کاربری ضروری میباشد"),
+  password: Yup.string().required("رمز عبور ضروری میباشد"),
 });
 
 function Form1(props: Form1Props) {

@@ -1,24 +1,14 @@
-import { useDispatch } from "react-redux";
-import {
-  addListAlert,
-  AddListAlertPayload,
-  removeListAlert,
-} from "../features/alert";
-import { Dispatch } from "redux";
-import { useSelector } from "react-redux";
-import { RootState } from "./store";
+import { ListAlerts } from "@lib/features/alert";
+import GlobalStoreService from "./GlobalStoreService";
 
-export default class AlertService {
-  private _useSelector = () => useSelector;
-  constructor(private dispatch: Dispatch) {}
-
-  addListAlert(payload: AddListAlertPayload) {
-    this.dispatch(addListAlert(payload));
+export default class AlertService extends GlobalStoreService {
+  addListAlert(payload: ListAlerts.AddPayload) {
+    this.dispatch(ListAlerts.Actions.add(payload));
   }
   getListAlert() {
-    return this._useSelector()((state: RootState) => state.list_alerts.items);
+    return this.getUseSelector()((state) => state.list_alerts.items);
   }
   removeListAlert() {
-    this.dispatch(removeListAlert());
+    this.dispatch(ListAlerts.Actions.remove());
   }
 }

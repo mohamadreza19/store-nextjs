@@ -1,14 +1,12 @@
-import { PulseLoader } from 'react-spinners';
-import { LoadingService } from '../../services';
-import { useDispatch } from 'react-redux';
-import { Transition1 } from '../transition';
-import { useEffect } from 'react';
-import { TransitionGroup } from 'react-transition-group';
-const color = '#374151';
+import { PulseLoader } from "react-spinners";
+import { LoadingService } from "../../services";
+import { useDispatch } from "react-redux";
+import { Transition1 } from "../transition";
+import { useEffect } from "react";
+import { TransitionGroup } from "react-transition-group";
+const color = "#374151";
 function Loading1() {
-  const dispatch = useDispatch();
-  const loadingService = new LoadingService(dispatch);
-
+  const loadingService = new LoadingService();
   return (
     <TransitionGroup>
       {loadingService.getPluse() && (

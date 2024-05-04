@@ -4,3 +4,5 @@ export * from "./header";
 export * from "./form";
 export * from "./card";
 export * from "./alert";
+export * from "./link";
+export * from "./lists";

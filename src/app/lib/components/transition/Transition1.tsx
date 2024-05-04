@@ -9,11 +9,11 @@ function Transition1(props: Transition1Props) {
       {...props}
       timeout={500}
       classNames={{
-        // appear: "opacity-0",
+        appear: "opacity-0",
         // appearActive: "transition-opacity duration-300 opacity-100",
-        // enter: "opacity-0",
+        enter: "opacity-0",
         // enterActive: "transition-opacity duration-300 opacity-100",
-        // // exit: "opacity-100",  // this breaks the exit transition
+        exit: "opacity-100", // this breaks the exit transition
         exitActive: "transition-opacity duration-200 opacity-0",
       }}
     >

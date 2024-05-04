@@ -2,7 +2,7 @@ import LocaledNumber from "../LocaledNumber";
 
 interface Card1Props {
   row1Val: string;
-  row2Val: string;
+  row2Val: number;
 }
 
 function Card1(props: Card1Props) {

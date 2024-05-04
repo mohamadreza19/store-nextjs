@@ -1,21 +1,14 @@
-import { Dispatch } from 'redux';
-import { useSelector } from 'react-redux';
-import { RootState } from './store';
-import { addPluse, removePluse } from '../features/loading';
+import { PluseLoading } from "../features/loading";
+import GlobalStoreService from "./GlobalStoreService";
 
-export default class LoadingService {
-  private _useSelector = () => useSelector;
-  constructor(private dispatch: Dispatch) {}
-
+export default class LoadingService extends GlobalStoreService {
   addPluse() {
-    this.dispatch(addPluse());
+    this.dispatch(PluseLoading.Actions.add());
   }
   getPluse() {
-    return this._useSelector()(
-      (state: RootState) => state.pluse_loading.loading
-    );
+    return this.getUseSelector()((state) => state.pluse_loading.loading);
   }
   removePluse() {
-    this.dispatch(removePluse());
+    this.dispatch(PluseLoading.Actions.remove());
   }
 }

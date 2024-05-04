@@ -1,6 +1,9 @@
 * {
   font-family: iran-yekan;
 }
+*::placeholder {
+  font-family: iran-yekan;
+}
 
 /* Base typography */
 body {
@@ -35,7 +38,7 @@ h4 {
 
 /* Paragraphs */
 p {
-  margin-bottom: 1rem !important;
+  /* margin-bottom: 1rem !important; */
 }
 
 /* Links */

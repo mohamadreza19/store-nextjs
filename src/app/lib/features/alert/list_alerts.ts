@@ -12,7 +12,7 @@ interface ListAlertsProps {
 const initialState: ListAlertsProps = {
   items: [],
 };
-export type AddPayload = Item;
+export type AddPayload_ = Item;
 
 const list_alerts = createSlice({
   name: "alertlist",
@@ -28,6 +28,9 @@ const list_alerts = createSlice({
   },
 });
 
-export const { add, remove } = list_alerts.actions;
-
-export default list_alerts.reducer;
+namespace ListAlerts {
+  export const reducer = list_alerts.reducer;
+  export const Actions = list_alerts.actions;
+  export type AddPayload = AddPayload_;
+}
+export default ListAlerts;

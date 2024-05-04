@@ -1,3 +1,4 @@
+"use client";
 import { useDispatch } from "react-redux";
 import { AlertService } from "../../services";
 import { useEffect } from "react";
@@ -15,8 +16,7 @@ interface ListAlertsProps {
 }
 
 function ListAlerts() {
-  const dispatch = useDispatch();
-  const alertService = new AlertService(dispatch);
+  const alertService = new AlertService();
   const items = alertService.getListAlert();
   useEffect(() => {
     if (items.length > 0) {

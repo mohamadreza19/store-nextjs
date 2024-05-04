@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface InitialState {
   loading: boolean;
@@ -8,7 +8,7 @@ const initialState: InitialState = {
 };
 
 const pluse_loading = createSlice({
-  name: 'pluseLoading',
+  name: "pluseLoading",
   initialState,
   reducers: {
     add(state) {
@@ -20,5 +20,8 @@ const pluse_loading = createSlice({
   },
 });
 
-export const { add, remove } = pluse_loading.actions;
-export default pluse_loading.reducer;
+namespace PluseLoading {
+  export const reducer = pluse_loading.reducer;
+  export const Actions = pluse_loading.actions;
+}
+export default PluseLoading;

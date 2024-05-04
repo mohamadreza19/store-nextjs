@@ -11,9 +11,9 @@ const nextConfig = {
 
   // Optional: Change the output directory `out` -> `dist`
   // distDir: "dist",
-  // ssr: false,
+
   images: {
-    domains: ['encrypted-tbn0.gstatic.com', 'other-hostname.com'],
+    domains: ["encrypted-tbn0.gstatic.com", "other-hostname.com"],
   },
 };
 
