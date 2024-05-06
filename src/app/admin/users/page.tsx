@@ -21,15 +21,20 @@ function Users() {
       setSearch
     );
   }
-
-  useEffect(() => {
-    adminModule.adminService.reInitUser();
+  function loadUsersAndSetPagination() {
     adminModule.adminController.loadUsersAndSetPagination(
       page,
       search,
       setPage,
       setHasNextPage
     );
+  }
+  useEffect(() => {
+    // if (adminModule.adminService.usersLuseenth)
+    adminModule.adminService.reInitUsers();
+  }, []);
+  useEffect(() => {
+    loadUsersAndSetPagination();
   }, [search]);
   return (
     <div className="w-full h-full ">
@@ -40,14 +45,7 @@ function Users() {
           toggleCreateUser={adminModule.adminController.toggleCreateUserModal}
           searchFn={resetAndSearchUsers}
           hasMore={hasNextPage}
-          fetchNextPage={() =>
-            adminModule.adminController.loadUsersAndSetPagination(
-              page,
-              search,
-              setPage,
-              setHasNextPage
-            )
-          }
+          fetchNextPage={loadUsersAndSetPagination}
           uesrs={adminModule.adminService.users.data}
         />
       </main>

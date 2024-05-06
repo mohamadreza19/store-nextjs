@@ -1,6 +1,9 @@
 import { Actions } from "immer-reducer";
 
 import { SetStateAction } from "react";
+import AdminService from "./admin.service";
+import AdminController from "./admin.controller";
+import { ProductsInjectionEntities } from "../products/interfaces";
 export type LoginFormikValues = {
   username: string;
   password: string;
@@ -13,18 +16,6 @@ export type User = {
   role: string;
   createAt: string;
 };
-export type Product = {
-  _id: string;
-  name: string;
-  creator: User;
-  price: number;
-  off_price: number;
-  off_precent: number;
-  total_sales: number;
-  files: string[];
-  createAt: string;
-  updatedAt: string;
-};
 
 export type AllUsersResponse = {
   data: User[];
@@ -34,14 +25,7 @@ export type AllUsersResponse = {
     page: number;
   };
 };
-export type AllProductsResponse = {
-  data: Product[];
-  meta: {
-    total: number;
-    pages: number;
-    page: number;
-  };
-};
+
 export type StatisticsResponse = {
   productCount: number;
   userCount: number;
@@ -54,11 +38,13 @@ export interface State {
   statistics: StatisticsResponse;
   users: AllUsersResponse;
 }
+export interface AdminInjectionEntities extends ProductsInjectionEntities {
+  adminService: AdminService;
+  adminController: AdminController;
+}
 
 // ui-local-state
-export type SetPage = (value: SetStateAction<number>) => void;
-export type SetHasNextPage = (value: SetStateAction<boolean>) => void;
-export type SetSearch = (value: SetStateAction<string>) => void;
+
 export type SetOpenCreateProductModal = (
   value: SetStateAction<boolean>
 ) => void;

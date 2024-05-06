@@ -1,5 +1,6 @@
-import { ActionCreator, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AllProductsResponse, AllUsersResponse, State } from "../interfaces";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AllProductsResponse } from "../interfaces";
+
 const initialState: AllProductsResponse = {
   data: [],
   meta: {

@@ -1,5 +1,5 @@
 import GlobalStoreService from "../lib/services/GlobalStoreService";
-import { RootState } from "../lib/services/store";
+import store, { RootState } from "../lib/services/store";
 import { AllUsersResponse, StatisticsResponse } from "./interfaces";
 import { sharedUiSliceActions } from "./reducres/sharedUi.slice";
 import { statisticsSliceActtions } from "./reducres/statistics.slice";
@@ -10,11 +10,15 @@ class AdminService extends GlobalStoreService {
   get users() {
     return this.getUseSelector()((state) => state.adminUsers);
   }
+  getUsersLenth = () => {
+    return this.getStore().adminUsers.data.length;
+  };
   addUser(values: AllUsersResponse) {
     return this.dispatch(usersSliceActions.add(values));
   }
-  reInitUser() {
-    return this.dispatch(usersSliceActions.reInit());
+  reInitUsers() {
+    if (this.getUsersLenth() > 0)
+      return this.dispatch(usersSliceActions.reInit());
   }
   // <statistics-segment>
   addStatistics(statistics: StatisticsResponse) {

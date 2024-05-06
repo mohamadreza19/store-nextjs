@@ -7,4 +7,5 @@ type UseSelectorFunction = () => TypedUseSelectorHook<RootState>;
 export default class GlobalStoreService {
   public dispatch = store.dispatch;
   public getUseSelector: UseSelectorFunction = () => useSelector;
+  public getStore = () => store.getState();
 }

@@ -6,6 +6,7 @@ import {
   adminStatistics,
   adminUsers,
 } from "@/app/admin/reducres";
+import { products } from "@/app/products/reducer";
 
 const store = configureStore({
   reducer: {
@@ -14,7 +15,9 @@ const store = configureStore({
     adminSharedUi,
     adminStatistics,
     adminUsers,
+    products,
   },
+  devTools: true,
 });
 export type RootState = ReturnType<typeof store.getState>;
 export default store;

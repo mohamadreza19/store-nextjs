@@ -1,15 +1,10 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { LoadingService, TokenStorageService } from "../lib/services";
 import { AuthApiService } from "../lib/services/api";
-import {
-  LoginFormikValues,
-  SetHasNextPage,
-  SetOpenCreateProductModal,
-  SetPage,
-  SetSearch,
-} from "./interfaces";
+import { LoginFormikValues, SetOpenCreateProductModal } from "./interfaces";
 import AdminApiService from "./admin.api";
 import AdminService from "./admin.service";
+import { SetHasNextPage, SetPage, SetSearch } from "../lib/shared/interfaces";
 
 class AdminController {
   constructor(
@@ -67,7 +62,7 @@ class AdminController {
     setSearch: SetSearch
   ) => {
     setTimeout(() => {
-      this.adminService.reInitUser();
+      this.adminService.reInitUsers();
       setPage(1);
       setHasNextPage(true);
       setSearch(searchEventValue);

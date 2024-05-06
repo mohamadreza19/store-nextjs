@@ -9,6 +9,5 @@ interface RootProps {
 }
 
 export default function RootLayout(props: RootProps) {
-  return <AdminModule useAdminSharedUi>{props.children}</AdminModule>;
-  // return <div>{props.children}</div>;
+  return <AdminModule>{props.children}</AdminModule>;
 }

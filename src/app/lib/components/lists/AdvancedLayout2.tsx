@@ -1,9 +1,10 @@
-import { Product } from "@/app/admin/interfaces";
+import { Product } from "@/app/products/interfaces";
 import Image from "next/image";
 import { BiEdit, BiTrash } from "react-icons/bi";
 import { IoMdEye } from "react-icons/io";
 import { MdEdit, MdRemove } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
+import LocaledNumber from "../LocaledNumber";
 
 interface Props {
   proudcts: Product[];
@@ -82,11 +83,13 @@ function AdvancedLayout2(props: Props) {
                 <th scope="col" className="px-6 py-3">
                   قیمت
                 </th>
-                <th scope="col" className="px-6 py-3"></th>
+                <th scope="col" className="px-6 py-3">
+                  عملیات
+                </th>
               </tr>
             </thead>
             <tbody>
-              {/* {props.proudcts?.map((user, index) => (
+              {props.proudcts?.map((product, index) => (
                 <tr
                   key={index}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -110,9 +113,26 @@ function AdvancedLayout2(props: Props) {
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {user.username}
+                    {product.name}
                   </th>
-                  <td className="px-6 py-4"> {user.role}</td>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    {product.creator.username}
+                  </th>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    <LocaledNumber number={product.total_sales} />
+                  </th>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    <LocaledNumber number={product.price} />
+                  </th>
 
                   <td className="px-6 py-4 flex justify-center gap-2">
                     <a
@@ -135,7 +155,7 @@ function AdvancedLayout2(props: Props) {
                     </a>
                   </td>
                 </tr>
-              ))} */}
+              ))}
             </tbody>
           </table>
         </div>
