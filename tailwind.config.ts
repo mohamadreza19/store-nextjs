@@ -13,6 +13,10 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      translate: {
+        "50p": "50%",
+        "50-p": "-50%",
+      },
       fontFamily: {
         yekan: ["iran-yekan"],
       },

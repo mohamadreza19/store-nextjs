@@ -7,6 +7,7 @@ import AdminService from "./admin.service";
 import { SetHasNextPage, SetPage, SetSearch } from "../lib/shared/interfaces";
 
 class AdminController {
+  private timeoutId: null | NodeJS.Timeout = null;
   constructor(
     private authService: AuthApiService,
     private adminApiService: AdminApiService,
@@ -55,26 +56,24 @@ class AdminController {
 
     setPage((prevPage) => prevPage + 1);
   };
-  resetAndSearchUsers = (
-    searchEventValue: string,
-    setPage: SetPage,
-    setHasNextPage: SetHasNextPage,
-    setSearch: SetSearch
-  ) => {
-    setTimeout(() => {
-      this.adminService.reInitUsers();
-      setPage(1);
+  resetAndSearchUsers = (search: string, setHasNextPage: SetHasNextPage) => {
+    if (this.timeoutId) clearTimeout(this.timeoutId);
+
+    this.adminService.reInitUsers();
+
+    this.timeoutId = setTimeout(async () => {
+      const result = await this.adminApiService.getAllUsers(1, 10, search);
+
+      this.adminService.addUser(result);
+
+      if (!(result.meta.page < result.meta.pages)) {
+        return setHasNextPage(false);
+      }
       setHasNextPage(true);
-      setSearch(searchEventValue);
     }, 350);
   };
-  toggleCreateUserModal() {
-    const MODALID = "crud-modal";
-    document.getElementById(MODALID)?.classList.toggle("hidden");
+  toggleCreateUserModal(id: string) {
+    document.getElementById(id)?.classList.toggle("hidden");
   }
-  // toggleCreateProductModal() {
-  //   const MODALID = "crud-modal";
-  //   document.getElementById(MODALID)?.classList.toggle("hidden");
-  // }
 }
 export default AdminController;

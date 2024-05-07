@@ -5,19 +5,22 @@ import { IoMdEye } from "react-icons/io";
 import { MdEdit, MdRemove } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LocaledNumber from "../LocaledNumber";
+import { Button1 } from "../button";
+import Modal1 from "../modal/Modal1";
 
 interface Props {
   proudcts: Product[];
   fetchNextPage: () => void;
   searchFn: (event: React.ChangeEvent<HTMLInputElement>) => void;
   hasMore: boolean;
-  toggleCreateUser: () => void;
+  toggleModal: () => void;
+  modalId: string;
 }
 
 function AdvancedLayout2(props: Props) {
   return (
     <>
-      {/* <Modal1 toggleFn={props.toggleCreateUser} /> */}
+      <Modal1 modalId={props.modalId} toggleFn={props.toggleModal} />
       <InfiniteScroll
         dataLength={10} //This is important field to render the next data
         next={props.fetchNextPage}
@@ -54,7 +57,7 @@ function AdvancedLayout2(props: Props) {
                 placeholder="جستجوی در نام محصولات"
               />
             </div>
-            {/* <Button1 onClick={props.toggleCreateUser}>افزودن کاربر</Button1> */}
+            <Button1 onClick={props.toggleModal}>افزودن محصول</Button1>
           </div>
           <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

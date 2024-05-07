@@ -4,6 +4,9 @@
 *::placeholder {
   font-family: iran-yekan;
 }
+input {
+  font-family: iran-yekan;
+}
 
 /* Base typography */
 body {

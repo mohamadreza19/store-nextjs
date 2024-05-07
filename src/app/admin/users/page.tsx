@@ -16,9 +16,7 @@ function Users() {
   function resetAndSearchUsers(event: React.ChangeEvent<HTMLInputElement>) {
     adminModule.adminController.resetAndSearchUsers(
       event.target.value,
-      setPage,
-      setHasNextPage,
-      setSearch
+      setHasNextPage
     );
   }
   function loadUsersAndSetPagination() {

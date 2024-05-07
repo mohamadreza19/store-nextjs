@@ -8,6 +8,12 @@ export type LoginFormikValues = {
   username: string;
   password: string;
 };
+export type CreateProductFormikValues = {
+  file: null | File;
+  productName: string;
+  price: string | number;
+  category: string;
+};
 export type User = {
   _id: string;
   username: string;

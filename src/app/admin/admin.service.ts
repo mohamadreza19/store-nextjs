@@ -17,8 +17,7 @@ class AdminService extends GlobalStoreService {
     return this.dispatch(usersSliceActions.add(values));
   }
   reInitUsers() {
-    if (this.getUsersLenth() > 0)
-      return this.dispatch(usersSliceActions.reInit());
+    return this.dispatch(usersSliceActions.reInit());
   }
   // <statistics-segment>
   addStatistics(statistics: StatisticsResponse) {

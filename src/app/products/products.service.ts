@@ -3,6 +3,7 @@ import { AllProductsResponse } from "./interfaces";
 import { productsSliceActions } from "./reducer/products.slice";
 
 class ProductsService extends GlobalStoreService {
+  public modalId1 = "id-" + Math.random() * 1000;
   get products() {
     return this.getUseSelector()((store) => store.products);
   }
@@ -13,7 +14,7 @@ class ProductsService extends GlobalStoreService {
     this.dispatch(productsSliceActions.add(values));
   }
   retInitProducts() {
-    if (this.getProductsLength()) this.dispatch(productsSliceActions.reInit());
+    this.dispatch(productsSliceActions.reInit());
   }
 }
 export default ProductsService;

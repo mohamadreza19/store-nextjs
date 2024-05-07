@@ -10,7 +10,7 @@ const InjectionContext = createContext({});
 
 interface AdminModuleState {}
 
-function AdminModule(props: ModuleProps) {
+function AdminModule({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const memorizedModlue = useMemo(
     () => AdminFactory.createInstances(router),
@@ -33,7 +33,7 @@ function AdminModule(props: ModuleProps) {
         )}
         <div className=" w-full ms-64 px-2">
           <div className="mt-10"></div>
-          {props.children}
+          {children}
         </div>
       </main>
     </InjectionContext.Provider>

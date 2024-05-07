@@ -3,7 +3,13 @@ import config from "config";
 import TokenStorageService from "../TokenStorageService";
 import LoadingService from "../LoadingService";
 
-type UrlExtension = "auth" | "admin" | "users" | "products" | "files";
+type UrlExtension =
+  | "auth"
+  | "admin"
+  | "users"
+  | "products"
+  | "files"
+  | "categories";
 
 enum HttpStatus {
   UNAUTHORIZED = 401,
