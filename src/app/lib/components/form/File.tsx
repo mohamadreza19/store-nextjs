@@ -1,6 +1,6 @@
-import { useField } from "formik";
-import { Button1 } from "../button";
-import React, { ChangeEvent } from "react";
+import { useField } from 'formik';
+import { Button1 } from '../button';
+import React, { ChangeEvent } from 'react';
 
 interface FileInputProps {
   name: string;
@@ -22,6 +22,7 @@ const FileInput: React.FC<FileInputProps> = ({ name, onChange, file }) => {
 
     el.click();
   }
+  console.log(onChange);
   return (
     <div
       id="default_size"

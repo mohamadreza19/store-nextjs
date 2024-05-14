@@ -14,9 +14,9 @@ const nextConfig = {
 
   images: {
     domains: [
-      "https://store19.s3.ir-thr-at1.arvanstorage.ir",
-      "encrypted-tbn0.gstatic.com",
-      "other-hostname.com",
+      'store19.s3.ir-thr-at1.arvanstorage.ir',
+      'encrypted-tbn0.gstatic.com',
+      'other-hostname.com',
     ],
   },
 };

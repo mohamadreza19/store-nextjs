@@ -5,34 +5,35 @@ import {
   ErrorMessage,
   useFormik,
   FormikProps,
-} from "formik";
-import * as Yup from "yup";
-import { Button1 } from "../button";
-import { MdClose } from "react-icons/md";
+} from 'formik';
+import * as Yup from 'yup';
+import { Button1 } from '../button';
+import { MdClose } from 'react-icons/md';
 
-import FileInput from "./File";
-import { ChangeEvent, useEffect, useState } from "react";
-import LocaleBasedInput from "./LocaleBasedInput";
-import { NumberService } from "../../services";
-import { Category } from "@/app/categories/interfaces";
-import { CreateProductFormikValues, Product } from "@/app/products/interfaces";
-import Image from "next/image";
-import { Card2 } from "../card";
+import FileInput from './File';
+import { ChangeEvent, useEffect, useState } from 'react';
+import LocaleBasedInput from './LocaleBasedInput';
+import { NumberService } from '../../services';
+import { Category } from '@/app/categories/interfaces';
+import { CreateProductFormikValues, Product } from '@/app/products/interfaces';
+import Image from 'next/image';
+import { Card2 } from '../card';
+import config from 'config';
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required("نام محصول ضروری است"),
-  price: Yup.mixed().required("قیمت ضروری است"),
-  categoryId: Yup.string().required("دسته بندی ضروری است"),
+  name: Yup.string().required('نام محصول ضروری است'),
+  price: Yup.mixed().required('قیمت ضروری است'),
+  categoryId: Yup.string().required('دسته بندی ضروری است'),
   file: Yup.mixed()
-    .required("فایل محصول ضروری است")
-    .test("fileSize", "حجم فایل نباید بیشتر از 5 مگابایت باشد", (value) => {
+    .required('فایل محصول ضروری است')
+    .test('fileSize', 'حجم فایل نباید بیشتر از 5 مگابایت باشد', (value) => {
       // Check if file size is less than or equal to 5 MB
       return value && (value as File).size <= 5242880; // 5 MB in bytes
     })
-    .test("fileType", "فرمت فایل باید mp4 یا webp باشد", (value) => {
+    .test('fileType', 'فرمت فایل باید mp4 یا webp باشد', (value) => {
       return (
-        (value && (value as File).type === "videp/mp4") ||
-        (value as File).type.startsWith("image/webp")
+        (value && (value as File).type === 'videp/mp4') ||
+        (value as File).type.startsWith('image/webp')
       );
     }),
 });
@@ -41,21 +42,11 @@ type SetSubCategoryId = (categoryId: string) => void;
 interface Form1Props {
   handleFormSubmit: (values: any) => void;
   fetchSubCategoriesByParentId: SetSubCategoryId;
-
+  pushFileForProduct: (file: File, productId: string) => void;
   onClose: () => void;
   categories: Category[];
   subCategories: Category[];
   product: Product;
-}
-
-function handleOnImageChange(
-  event: React.ChangeEvent<HTMLInputElement>,
-  formikProps: FormikProps<CreateProductFormikValues>
-) {
-  const files = event.currentTarget.files;
-  const file = files?.length ? files[0] : null;
-
-  formikProps.setFieldValue("file", file);
 }
 
 function formatNumAndHandleChange(
@@ -67,27 +58,18 @@ function formatNumAndHandleChange(
     NumberService.toformatEnNumber(e.target.value)
   );
 }
-const images = [
-  "/temp/a8234e915f4f6ed119daac830e39eca031d62c2d_1705751969.webp",
-  "/temp/bd7648d55ffe49a0596ac3668f4db41f7c790f6a_1696760508.webp",
-  "/temp/ec9a962187e1f82cc47e7a148ef99ec1c6fd024d_1656423336.webp",
-  "/temp/a8234e915f4f6ed119daac830e39eca031d62c2d_1705751969.webp",
-  "/temp/bd7648d55ffe49a0596ac3668f4db41f7c790f6a_1696760508.webp",
-  "/temp/ec9a962187e1f82cc47e7a148ef99ec1c6fd024d_1656423336.webp",
-];
+
 function Form3(props: Form1Props) {
   // const  [initialValues,setInitialValues]  = useState(props.product)
+
   const initialValues: CreateProductFormikValues = {
     name: props.product.name,
     file: null,
-    categoryId: "",
-    price: props.product.price,
+    categoryId: props.product?.category._id,
+    price: NumberService.toformatEnNumber(props.product.price),
   };
 
-  useEffect(() => {
-    if (props.categories.length)
-      props.fetchSubCategoriesByParentId(props.categories[0]._id);
-  }, [props.categories.length]);
+  useEffect(() => {}, [props.categories.length]);
 
   return (
     <>
@@ -184,7 +166,11 @@ function Form3(props: Form1Props) {
                           <option
                             key={index}
                             value={category._id}
-                            selected={index === 0 ? true : false}
+                            selected={
+                              category._id === props.product.category.parent_id
+                                ? true
+                                : false
+                            }
                           >
                             <p className="text-sm">{category.name}</p>
                           </option>
@@ -208,19 +194,21 @@ function Form3(props: Form1Props) {
                         {!props.subCategories.length ? (
                           <option disabled>یافت نشد</option>
                         ) : (
-                          props.subCategories.map((subCategory, index) => (
-                            <option
-                              key={index}
-                              value={subCategory._id}
-                              selected={
-                                subCategory._id === props.product.categoryId
-                                  ? true
-                                  : false
-                              }
-                            >
-                              <p className="text-sm">{subCategory.name}</p>
-                            </option>
-                          ))
+                          props.subCategories.map((subCategory, index) => {
+                            return (
+                              <option
+                                key={index}
+                                value={subCategory._id}
+                                selected={
+                                  subCategory._id === props.product.category._id
+                                    ? true
+                                    : false
+                                }
+                              >
+                                <p className="text-sm">{subCategory.name}</p>
+                              </option>
+                            );
+                          })
                         )}
                       </Field>
                       <ErrorMessage
@@ -232,12 +220,12 @@ function Form3(props: Form1Props) {
                     {/* <file> */}
 
                     <div className="grid grid-cols-3 sm:col-span-2  place-items-center">
-                      {images.map((image) => {
+                      {props.product.files.map((image) => {
                         return (
                           <Card2>
                             <Image
                               alt="sd"
-                              src={image}
+                              src={config.FILE_URL_BASE + '/' + image}
                               width={150}
                               height={160}
                             />
@@ -255,8 +243,16 @@ function Form3(props: Form1Props) {
                       </label>
                       <FileInput
                         file={formikProps.values.file}
-                        name="file"
-                        onChange={(e) => handleOnImageChange(e, formikProps)}
+                        name="file-"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          console.log('test');
+
+                          if (e.target.files?.length)
+                            props.pushFileForProduct(
+                              e.target.files[0],
+                              props.product._id
+                            );
+                        }}
                       />
                       {/* <Field id="file" name="file" type="file" as={FileInput} /> */}
                       <ErrorMessage

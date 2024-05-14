@@ -1,11 +1,11 @@
-"use client";
-import { Header1, Modal2, Modal1 } from "@/app/lib/components";
-import AdvancedLayout2 from "@/app/lib/components/lists/AdvancedLayout2";
-import { useAdminInjection } from "../admin.module";
-import { useEffect, useMemo, useState } from "react";
+'use client';
+import { Header1, Modal2, Modal1 } from '@/app/lib/components';
+import AdvancedLayout2 from '@/app/lib/components/lists/AdvancedLayout2';
+import { useAdminInjection } from '../admin.module';
+import { useEffect, useMemo, useState } from 'react';
 
 function Products() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(true);
   const AdminModule = useAdminInjection();
@@ -55,6 +55,7 @@ function Products() {
         toggleFn={AdminModule.productsController.toggleCreateProductModal}
       />
       <Modal2
+        pushFileForProduct={AdminModule.productsController.pushFileForProduct}
         product={AdminModule.productsService.getProduct()}
         categories={AdminModule.categoriesService.getMainCategories()}
         subcategories={AdminModule.categoriesService.getSubCategories()}

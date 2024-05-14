@@ -1,13 +1,13 @@
-import axios from "axios";
-import ApiService from "../lib/services/api/ApiService";
-import { AllUsersResponse, StatisticsResponse } from "./interfaces";
+import axios from 'axios';
+import ApiService from '../lib/services/api/ApiService';
+import { AllUsersResponse, StatisticsResponse } from './interfaces';
 
 class AdminApiService extends ApiService {
   constructor() {
-    super("admin");
+    super('admin');
   }
   async getStatistics(): Promise<StatisticsResponse> {
-    const result = await this.$axios.get("statistics");
+    const result = await this.$axios.get('statistics');
 
     return result.data;
   }
