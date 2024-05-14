@@ -1,8 +1,14 @@
+import CategoriesService from "./categories.service";
+import CategoriesController from "./categories.controller";
+
 export type Category = {
-  parentId: string | null;
   _id: string;
   name: string;
-  parent: null;
+  parent_id: null | string;
 };
+export type CategoriesResponse = Category[];
 
-export type AllCategoriesResponse = Category[];
+export interface CategoriesInjectionEntities {
+  categoriesService: CategoriesService;
+  categoriesController: CategoriesController;
+}

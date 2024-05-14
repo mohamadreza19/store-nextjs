@@ -1,3 +1,5 @@
+import FilesApiService from "../files/files.api";
+import { AlertService } from "../lib/services";
 import { ModuleFactory } from "../lib/shared/interfaces";
 import ProductsApiService from "./products.api";
 import ProductsController from "./products.controller";
@@ -9,7 +11,9 @@ class ProuctsFactory implements ModuleFactory {
 
     const productsController = new ProductsController(
       new ProductsApiService(),
-      productsService
+      new FilesApiService(),
+      productsService,
+      new AlertService()
     );
 
     return { productsService, productsController };

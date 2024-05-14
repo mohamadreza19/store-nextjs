@@ -4,7 +4,7 @@ import { Provider as InversifyProvider } from "inversify-react";
 import container from "./inversify.config";
 import { Provider } from "react-redux";
 import store from "./store";
-import { ListAlerts } from "../components";
+import { DismissAlert, ListAlerts } from "../components";
 import ErrorCatchService from "./ErrorCatchService";
 import PulseLoader from "../components/loading/PulseLoader";
 
@@ -25,6 +25,7 @@ function ClientProvider(props: ClientProviderProps) {
         <Provider store={store}>
           {props.children}
           <ListAlerts />
+          <DismissAlert />
           <PulseLoader />
         </Provider>
       </InversifyProvider>

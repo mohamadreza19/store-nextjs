@@ -4,16 +4,12 @@ import { SetStateAction } from "react";
 import AdminService from "./admin.service";
 import AdminController from "./admin.controller";
 import { ProductsInjectionEntities } from "../products/interfaces";
+import { CategoriesInjectionEntities } from "../categories/interfaces";
 export type LoginFormikValues = {
   username: string;
   password: string;
 };
-export type CreateProductFormikValues = {
-  file: null | File;
-  productName: string;
-  price: string | number;
-  category: string;
-};
+
 export type User = {
   _id: string;
   username: string;
@@ -44,7 +40,9 @@ export interface State {
   statistics: StatisticsResponse;
   users: AllUsersResponse;
 }
-export interface AdminInjectionEntities extends ProductsInjectionEntities {
+export interface AdminInjectionEntities
+  extends ProductsInjectionEntities,
+    CategoriesInjectionEntities {
   adminService: AdminService;
   adminController: AdminController;
 }

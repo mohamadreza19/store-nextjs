@@ -5,6 +5,7 @@ import ProductsService from "./products.service";
 export type Product = {
   _id: string;
   name: string;
+  categoryId: string;
   creator: User;
   price: number;
   off_price: number;
@@ -22,6 +23,29 @@ export type AllProductsResponse = {
     pages: number;
     page: number;
   };
+};
+export type CreateProductBody = {
+  name: string;
+  price: number;
+  categoryId: string;
+};
+export type CreateProductFormikValues = {
+  file: null | File;
+  name: string;
+  price: string | number;
+  categoryId: string;
+};
+export type CreateProductResponse = {
+  name: string;
+  creator: string;
+  price: 0;
+  files: [];
+  off_price: 0;
+  off_precent: 0;
+  _id: string;
+  createAt: string;
+  updatedAt: string;
+  __v: 0;
 };
 export type ProductsInjectionEntities = {
   productsService: ProductsService;

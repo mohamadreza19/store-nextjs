@@ -15,7 +15,9 @@ import { ChangeEvent, useEffect, useState } from "react";
 import LocaleBasedInput from "./LocaleBasedInput";
 import { NumberService } from "../../services";
 import { Category } from "@/app/categories/interfaces";
-import { CreateProductFormikValues } from "@/app/products/interfaces";
+import { CreateProductFormikValues, Product } from "@/app/products/interfaces";
+import Image from "next/image";
+import { Card2 } from "../card";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("نام محصول ضروری است"),
@@ -43,6 +45,7 @@ interface Form1Props {
   onClose: () => void;
   categories: Category[];
   subCategories: Category[];
+  product: Product;
 }
 
 function handleOnImageChange(
@@ -64,13 +67,21 @@ function formatNumAndHandleChange(
     NumberService.toformatEnNumber(e.target.value)
   );
 }
-
-function Form2(props: Form1Props) {
+const images = [
+  "/temp/a8234e915f4f6ed119daac830e39eca031d62c2d_1705751969.webp",
+  "/temp/bd7648d55ffe49a0596ac3668f4db41f7c790f6a_1696760508.webp",
+  "/temp/ec9a962187e1f82cc47e7a148ef99ec1c6fd024d_1656423336.webp",
+  "/temp/a8234e915f4f6ed119daac830e39eca031d62c2d_1705751969.webp",
+  "/temp/bd7648d55ffe49a0596ac3668f4db41f7c790f6a_1696760508.webp",
+  "/temp/ec9a962187e1f82cc47e7a148ef99ec1c6fd024d_1656423336.webp",
+];
+function Form3(props: Form1Props) {
+  // const  [initialValues,setInitialValues]  = useState(props.product)
   const initialValues: CreateProductFormikValues = {
-    name: "",
+    name: props.product.name,
     file: null,
     categoryId: "",
-    price: "",
+    price: props.product.price,
   };
 
   useEffect(() => {
@@ -80,7 +91,7 @@ function Form2(props: Form1Props) {
 
   return (
     <>
-      <div className="relative p-4 w-full max-w-md max-h-full">
+      <div className="relative p-4 w-full max-w-2xl max-h-full">
         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -98,6 +109,7 @@ function Form2(props: Form1Props) {
           </div>
 
           <Formik
+            enableReinitialize
             onSubmit={props.handleFormSubmit}
             // onReset={formik.handleReset}
 
@@ -200,7 +212,11 @@ function Form2(props: Form1Props) {
                             <option
                               key={index}
                               value={subCategory._id}
-                              selected={index === 0 ? true : false}
+                              selected={
+                                subCategory._id === props.product.categoryId
+                                  ? true
+                                  : false
+                              }
                             >
                               <p className="text-sm">{subCategory.name}</p>
                             </option>
@@ -213,8 +229,23 @@ function Form2(props: Form1Props) {
                         component="div"
                       />
                     </div>
-
                     {/* <file> */}
+
+                    <div className="grid grid-cols-3 sm:col-span-2  place-items-center">
+                      {images.map((image) => {
+                        return (
+                          <Card2>
+                            <Image
+                              alt="sd"
+                              src={image}
+                              width={150}
+                              height={160}
+                            />
+                          </Card2>
+                        );
+                      })}
+                    </div>
+
                     <div className="col-span-2">
                       <label
                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -261,4 +292,4 @@ function Form2(props: Form1Props) {
   );
 }
 
-export default Form2;
+export default Form3;

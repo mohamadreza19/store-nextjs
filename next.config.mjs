@@ -13,7 +13,11 @@ const nextConfig = {
   // distDir: "dist",
 
   images: {
-    domains: ["encrypted-tbn0.gstatic.com", "other-hostname.com"],
+    domains: [
+      "https://store19.s3.ir-thr-at1.arvanstorage.ir",
+      "encrypted-tbn0.gstatic.com",
+      "other-hostname.com",
+    ],
   },
 };
 

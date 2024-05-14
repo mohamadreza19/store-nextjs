@@ -1,8 +1,8 @@
 "use client";
-import { Header1 } from "@/app/lib/components";
+import { Header1, Modal2, Modal1 } from "@/app/lib/components";
 import AdvancedLayout2 from "@/app/lib/components/lists/AdvancedLayout2";
 import { useAdminInjection } from "../admin.module";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function Products() {
   const [search, setSearch] = useState("");
@@ -16,33 +16,65 @@ function Products() {
       setHasNextPage
     );
   }
-  function loadProductsAndSetPagination() {
+  const loadProductsAndSetPagination = function () {
+    AdminModule.productsService.retInitProducts();
     AdminModule.productsController.loadProductsAndSetPagination(
       page,
       search,
       setPage,
       setHasNextPage
     );
+  };
+  // function loadProductsAndSetPagination() {
+  //   AdminModule.productsController.loadProductsAndSetPagination(
+  //     page,
+  //     search,
+  //     setPage,
+  //     setHasNextPage
+  //   );
+  // }
+  function fetchMainCategories() {
+    AdminModule.categoriesController.fetchMainCategories();
   }
 
   useEffect(() => {
-    AdminModule.productsService.retInitProducts();
     loadProductsAndSetPagination();
+    fetchMainCategories();
   }, []);
 
   return (
-    <div className="w-full h-full ">
-      <Header1>محصولات</Header1>
-      <AdvancedLayout2
-        fetchNextPage={loadProductsAndSetPagination}
-        // fetchNextPage={() => {}}
-        hasMore={hasNextPage}
-        searchFn={resetAndSearchProducts}
+    <>
+      <Modal1
+        fetchSubCategoriesByParentId={
+          AdminModule.categoriesController.fetchSubCategoriesByParentId
+        }
+        createProduct={AdminModule.productsController.createProduct}
+        categories={AdminModule.categoriesService.getMainCategories()}
+        subcategories={AdminModule.categoriesService.getSubCategories()}
         modalId={AdminModule.productsService.modalId1}
-        toggleModal={AdminModule.productsController.toggleCreateProductModal}
-        proudcts={AdminModule.productsService.products.data}
+        toggleFn={AdminModule.productsController.toggleCreateProductModal}
       />
-    </div>
+      <Modal2
+        product={AdminModule.productsService.getProduct()}
+        categories={AdminModule.categoriesService.getMainCategories()}
+        subcategories={AdminModule.categoriesService.getSubCategories()}
+        modalId={AdminModule.productsService.modalId2}
+      />
+      <div className="w-full h-full ">
+        <Header1>محصولات</Header1>
+        <AdvancedLayout2
+          fetchNextPage={loadProductsAndSetPagination}
+          onClickEdit={AdminModule.productsController.getProductById}
+          // fetchNextPage={() => {}}
+          removeProductById={AdminModule.productsController.removeProductById}
+          hasMore={hasNextPage}
+          searchFn={resetAndSearchProducts}
+          modalId={AdminModule.productsService.modalId1}
+          toggleModal={AdminModule.productsController.toggleCreateProductModal}
+          proudcts={AdminModule.productsService.getProducts().data}
+        />
+      </div>
+    </>
   );
 }
 

@@ -6,21 +6,23 @@ import { MdEdit, MdRemove } from "react-icons/md";
 import InfiniteScroll from "react-infinite-scroll-component";
 import LocaledNumber from "../LocaledNumber";
 import { Button1 } from "../button";
-import Modal1 from "../modal/Modal1";
 
 interface Props {
   proudcts: Product[];
-  fetchNextPage: () => void;
-  searchFn: (event: React.ChangeEvent<HTMLInputElement>) => void;
+
   hasMore: boolean;
-  toggleModal: () => void;
   modalId: string;
+
+  searchFn: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  fetchNextPage: () => void;
+  toggleModal: () => void;
+  removeProductById: (productId: string) => void;
+  onClickEdit: (productId: string) => void;
 }
 
 function AdvancedLayout2(props: Props) {
   return (
     <>
-      <Modal1 modalId={props.modalId} toggleFn={props.toggleModal} />
       <InfiniteScroll
         dataLength={10} //This is important field to render the next data
         next={props.fetchNextPage}
@@ -114,7 +116,7 @@ function AdvancedLayout2(props: Props) {
                   </td>
                   <th
                     scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    className="px-6 py-4 max-w-56 overflow-y-auto text-sm  font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
                     {product.name}
                   </th>
@@ -137,26 +139,26 @@ function AdvancedLayout2(props: Props) {
                     <LocaledNumber number={product.price} />
                   </th>
 
-                  <td className="px-6 py-4 flex justify-center gap-2">
+                  <th className="px-6 py-4 flex flex-col items-center justify-center gap-2">
                     <a
                       href="#"
                       className=" font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       <IoMdEye className="fill-gray-400" />
                     </a>
-                    <a
-                      href="#"
-                      className=" font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    <span
+                      onClick={() => props.onClickEdit(product._id)}
+                      className="cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       <MdEdit className="fill-blue-600" />
-                    </a>
-                    <a
-                      href="#"
-                      className=" font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    </span>
+                    <span
+                      onClick={() => props.removeProductById(product._id)}
+                      className="cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       <BiTrash className="fill-red-600" />
-                    </a>
-                  </td>
+                    </span>
+                  </th>
                 </tr>
               ))}
             </tbody>

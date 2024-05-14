@@ -5,31 +5,36 @@ import { Transition1 } from "../transition";
 import LocaledNumber from "../LocaledNumber";
 import { useEffect, useRef } from "react";
 import { Form2 } from "../form";
+import { Category } from "@/app/categories/interfaces";
+import { CreateProductFormikValues } from "@/app/products/interfaces";
 interface Modal1Props {
+  createProduct: (values: any) => void;
   toggleFn: () => void;
+  fetchSubCategoriesByParentId: (categoryId: string) => void;
   modalId: string;
+  categories: Category[];
+  subcategories: Category[];
 }
 
 function Modal1(props: Modal1Props) {
-  const priceInputRef = useRef<HTMLInputElement>(null);
   function close() {
     document.getElementById(props.modalId)?.classList.toggle("hidden");
   }
-  useEffect(() => {
-    if (priceInputRef.current?.value) {
-      priceInputRef.current.value = LocaledNumber({
-        number: priceInputRef.current.value,
-      });
-    }
-  }, []);
+
   return (
     <Transition1>
       <div
         id={props.modalId}
         aria-hidden="true"
-        className=" overflow-y-auto overflow-x-hidden absolute top-1/2 left-1/2   z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        className="hidden overflow-y-auto overflow-x-hidden absolute top-1/2 left-1/2   z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
       >
-        <Form2 onClose={close} handleFormSubmit={(values) => {}} />
+        <Form2
+          handleFormSubmit={props.createProduct}
+          fetchSubCategoriesByParentId={props.fetchSubCategoriesByParentId}
+          categories={props.categories}
+          subCategories={props.subcategories}
+          onClose={close}
+        />
       </div>
     </Transition1>
   );

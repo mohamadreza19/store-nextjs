@@ -18,7 +18,7 @@ function AdminModule({ children }: { children: React.ReactNode }) {
   );
 
   useEffect(() => {
-    memorizedModlue.adminController.redirectToDashboardIfAuthorized();
+    // memorizedModlue.adminController.redirectToDashboardIfAuthorized();
   }, []);
 
   return (

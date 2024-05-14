@@ -1,14 +1,20 @@
 import ApiService from "../lib/services/api/ApiService";
-import { AllCategoriesResponse } from "./interfaces";
+import { CategoriesResponse } from "./interfaces";
 
-class CategoriesApi extends ApiService {
+class CategoriesApiService extends ApiService {
   constructor() {
     super("categories");
   }
+  async getCategories(): Promise<CategoriesResponse> {
+    const result = await this.$axios.get("/");
 
-  async getCategories(): Promise<AllCategoriesResponse> {
-    const result = await this.$axios("/");
+    return result.data;
+  }
+  async getSubCategories(parentId: string): Promise<CategoriesResponse> {
+    const result = await this.$axios.get(`/?parentId=${parentId}`);
+
     return result.data;
   }
 }
-export default CategoriesApi;
+
+export default CategoriesApiService;

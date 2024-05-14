@@ -7,6 +7,7 @@ import AdminApiService from "./admin.api";
 import { TokenStorageService } from "../lib/services";
 import { AdminInjectionEntities } from "./interfaces";
 import ProuctsFactory from "../products/product.factory";
+import CategoriesFactory from "../categories/categories.factory";
 
 class AdminFactory implements ModuleFactory {
   static createInstances(router: AppRouterInstance): AdminInjectionEntities {
@@ -20,6 +21,7 @@ class AdminFactory implements ModuleFactory {
     );
     return {
       ...ProuctsFactory.createInstances(),
+      ...CategoriesFactory.createInstances(),
       adminService,
       adminController,
     };
