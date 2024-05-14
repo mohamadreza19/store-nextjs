@@ -1,5 +1,5 @@
 import ApiService from "../lib/services/api/ApiService";
-import { FilesResponse, UploadFiles } from "./interfaces";
+import { deleteFile, FilesResponse, UploadFiles } from "./interfaces";
 
 class FilesApiService extends ApiService {
   constructor() {
@@ -19,6 +19,15 @@ class FilesApiService extends ApiService {
     });
 
     return result.data;
+  }
+  async deleteFile(values: deleteFile) {
+    const { entityId, entityType, fileId } = values;
+    await this.$axios.delete("/" + fileId, {
+      data: {
+        entityId,
+        entityType,
+      },
+    });
   }
 }
 

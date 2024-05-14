@@ -21,13 +21,15 @@ class ProductsService extends GlobalStoreService {
   getProduct() {
     return this.getUseSelector()((store) => store.product);
   }
-  getProducts() {
-    return this.getUseSelector()((store) => store.products);
+  getProducts(useAshook = false) {
+    return useAshook
+      ? this.getUseSelector()((store) => store.products)
+      : this.getStore().products;
   }
   getProductsLength() {
     return this.getStore().products.data.length;
   }
-  getProductById(useAshook = false, id: string) {
+  getProductById(useAshook = true, id: string) {
     return useAshook
       ? this.getUseSelector()((store) =>
           store.products.data.find((product) => product._id === id)

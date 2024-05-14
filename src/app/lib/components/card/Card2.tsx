@@ -4,10 +4,11 @@ import { FaClosedCaptioning } from "react-icons/fa";
 
 type Props = {
   children: ReactNode;
+  onClick?: () => void;
 };
-export const Card2 = ({ children }: Props) => {
+export const Card2 = ({ children, onClick }: Props) => {
   return (
-    <div className="relative ">
+    <div onClick={onClick} className="relative ">
       <section className="w-fit h-fit p-1 m-2 cursor-pointer bg-gray-300 rounded-md hover:bg-gray-500">
         <CgClose />
       </section>

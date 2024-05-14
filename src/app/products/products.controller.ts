@@ -1,9 +1,9 @@
-import FilesApiService from '../files/files.api';
-import { AlertService } from '../lib/services';
-import { SetHasNextPage, SetPage, SetSearch } from '../lib/shared/interfaces';
-import { CreateProductBody, CreateProductFormikValues } from './interfaces';
-import ProductsApiService from './products.api';
-import ProductsService from './products.service';
+import FilesApiService from "../files/files.api";
+import { AlertService } from "../lib/services";
+import { SetHasNextPage, SetPage, SetSearch } from "../lib/shared/interfaces";
+import { CreateProductBody, CreateProductFormikValues } from "./interfaces";
+import ProductsApiService from "./products.api";
+import ProductsService from "./products.service";
 
 class ProductsController {
   private timeoutId: null | NodeJS.Timeout = null;
@@ -55,10 +55,11 @@ class ProductsController {
       }
     }, 380);
   };
+
   getProductById = async (id: string) => {
     document
       .getElementById(this.productsService.modalId2)
-      ?.classList.toggle('hidden');
+      ?.classList.toggle("hidden");
     const result = await this.productsApiService.getProductById(id);
 
     this.productsService.replaceProduct(result);
@@ -68,7 +69,7 @@ class ProductsController {
     console.log(this.productsService.modalId1);
     document
       .getElementById(this.productsService.modalId1)
-      ?.classList.toggle('hidden');
+      ?.classList.toggle("hidden");
   };
   createProduct = async (values: CreateProductFormikValues) => {
     const { categoryId, file, name, price } = values;
@@ -76,29 +77,29 @@ class ProductsController {
     const productResult = await this.productsApiService.createProduct({
       name,
       categoryId,
-      price: Number((price as string).replace(/,/g, '')),
+      price: Number((price as string).replace(/,/g, "")),
     });
     if (file)
       await this.filesApiService.uploadFile({
         entityId: productResult._id,
-        entityType: 'product',
+        entityType: "product",
         file: file,
       });
 
-    const result = await this.productsApiService.getAllProducts(1, 10, '');
+    const result = await this.productsApiService.getAllProducts(1, 10, "");
 
     this.productsService.retInitProducts();
     this.productsService.setProducts(result);
 
     document
       .getElementById(this.productsService.modalId1)
-      ?.classList.toggle('hidden');
+      ?.classList.toggle("hidden");
 
     setTimeout(() => {
       this.alertService.addDismissAlert({
-        message: 'محصول با موفقیت اضافه شد',
+        message: "محصول با موفقیت اضافه شد",
         open: true,
-        type: 'success',
+        type: "success",
       });
     }, 600);
   };
@@ -111,11 +112,49 @@ class ProductsController {
     this.alertService.addDismissAlert({
       message: `محصول " ${result?.name} " با موففقیت حذف شد`,
       open: true,
-      type: 'blue',
+      type: "blue",
     });
   };
   pushFileForProduct = async (file: File, productId: string) => {
-    console.log(file, productId);
+    const result = await this.filesApiService.uploadFile({
+      entityId: productId,
+      entityType: "product",
+      file: file,
+    });
+
+    const productResult = await this.productsApiService.getProductById(
+      productId
+    );
+
+    this.productsService.replaceProduct(productResult);
+    this.productsService.setProduct(productResult);
+  };
+  pullProductFile = async (fileId: string, productId: string) => {
+    const productState = this.productsService.getProductById(false, productId);
+    const productsState = this.productsService.getProducts(false);
+    console.log(productState);
+    console.log(productsState);
+    // if (productState?.files.length === 1) {
+    this.alertService.addDismissAlert({
+      message: "تعداد کمتر از یک فایل مجاز نیست",
+      open: true,
+      type: "error",
+    });
+    //   return;
+    // }
+
+    await this.filesApiService.deleteFile({
+      entityId: productId,
+      entityType: "product",
+      fileId: fileId,
+    });
+
+    const productResult = await this.productsApiService.getProductById(
+      productId
+    );
+
+    this.productsService.replaceProduct(productResult);
+    this.productsService.setProduct(productResult);
   };
 }
 

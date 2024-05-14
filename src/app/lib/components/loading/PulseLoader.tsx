@@ -11,7 +11,7 @@ function Loading1() {
     <TransitionGroup>
       {loadingService.getPluse() && (
         <Transition1>
-          <div className=" h-screen  w-screen bg-gray-400 bg-opacity-50 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+          <div className=" h-screen  w-screen bg-gray-400 bg-opacity-50 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 flex items-center justify-center">
             <section className="w-60 h-44 bg-white rounded-lg flex items-center justify-center">
               <PulseLoader color={color} />
             </section>

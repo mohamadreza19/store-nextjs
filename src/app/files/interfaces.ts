@@ -6,6 +6,11 @@ export type UploadFiles = {
   entityType: "product" | "user";
   entityId: string;
 };
+export type deleteFile = {
+  fileId: string;
+  entityType: "product" | "user";
+  entityId: string;
+};
 
 export interface FilesInjectionEntities {
   filesService: FilesService;

@@ -5,35 +5,35 @@ import {
   ErrorMessage,
   useFormik,
   FormikProps,
-} from 'formik';
-import * as Yup from 'yup';
-import { Button1 } from '../button';
-import { MdClose } from 'react-icons/md';
+} from "formik";
+import * as Yup from "yup";
+import { Button1 } from "../button";
+import { MdClose } from "react-icons/md";
 
-import FileInput from './File';
-import { ChangeEvent, useEffect, useState } from 'react';
-import LocaleBasedInput from './LocaleBasedInput';
-import { NumberService } from '../../services';
-import { Category } from '@/app/categories/interfaces';
-import { CreateProductFormikValues, Product } from '@/app/products/interfaces';
-import Image from 'next/image';
-import { Card2 } from '../card';
-import config from 'config';
+import FileInput from "./File";
+import { ChangeEvent, useEffect, useState } from "react";
+import LocaleBasedInput from "./LocaleBasedInput";
+import { NumberService } from "../../services";
+import { Category } from "@/app/categories/interfaces";
+import { CreateProductFormikValues, Product } from "@/app/products/interfaces";
+import Image from "next/image";
+import { Card2 } from "../card";
+import config from "config";
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required('نام محصول ضروری است'),
-  price: Yup.mixed().required('قیمت ضروری است'),
-  categoryId: Yup.string().required('دسته بندی ضروری است'),
+  name: Yup.string().required("نام محصول ضروری است"),
+  price: Yup.mixed().required("قیمت ضروری است"),
+  categoryId: Yup.string().required("دسته بندی ضروری است"),
   file: Yup.mixed()
-    .required('فایل محصول ضروری است')
-    .test('fileSize', 'حجم فایل نباید بیشتر از 5 مگابایت باشد', (value) => {
+    .required("فایل محصول ضروری است")
+    .test("fileSize", "حجم فایل نباید بیشتر از 5 مگابایت باشد", (value) => {
       // Check if file size is less than or equal to 5 MB
       return value && (value as File).size <= 5242880; // 5 MB in bytes
     })
-    .test('fileType', 'فرمت فایل باید mp4 یا webp باشد', (value) => {
+    .test("fileType", "فرمت فایل باید mp4 یا webp باشد", (value) => {
       return (
-        (value && (value as File).type === 'videp/mp4') ||
-        (value as File).type.startsWith('image/webp')
+        (value && (value as File).type === "videp/mp4") ||
+        (value as File).type.startsWith("image/webp")
       );
     }),
 });
@@ -43,6 +43,7 @@ interface Form1Props {
   handleFormSubmit: (values: any) => void;
   fetchSubCategoriesByParentId: SetSubCategoryId;
   pushFileForProduct: (file: File, productId: string) => void;
+  pullProductFile: (fileId: string, productId: string) => void;
   onClose: () => void;
   categories: Category[];
   subCategories: Category[];
@@ -217,15 +218,19 @@ function Form3(props: Form1Props) {
                         component="div"
                       />
                     </div>
-                    {/* <file> */}
+                    {/* <files> */}
 
                     <div className="grid grid-cols-3 sm:col-span-2  place-items-center">
-                      {props.product.files.map((image) => {
+                      {props.product.files.map((fileId) => {
                         return (
-                          <Card2>
+                          <Card2
+                            onClick={() =>
+                              props.pullProductFile(fileId, props.product._id)
+                            }
+                          >
                             <Image
                               alt="sd"
-                              src={config.FILE_URL_BASE + '/' + image}
+                              src={config.FILE_URL_BASE + "/" + fileId}
                               width={150}
                               height={160}
                             />
@@ -245,7 +250,7 @@ function Form3(props: Form1Props) {
                         file={formikProps.values.file}
                         name="file-"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          console.log('test');
+                          console.log("test");
 
                           if (e.target.files?.length)
                             props.pushFileForProduct(
