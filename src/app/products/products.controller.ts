@@ -1,7 +1,13 @@
 import FilesApiService from "../files/files.api";
 import { AlertService } from "../lib/services";
 import { SetHasNextPage, SetPage, SetSearch } from "../lib/shared/interfaces";
-import { CreateProductBody, CreateProductFormikValues } from "./interfaces";
+import {
+  CreateProductBody,
+  CreateProductFormikValues,
+  SelectModal,
+  UpdateProductBody,
+  UpdateProductFormikValues,
+} from "./interfaces";
 import ProductsApiService from "./products.api";
 import ProductsService from "./products.service";
 
@@ -38,7 +44,7 @@ class ProductsController {
   resetAndSearchProducts = (search: string, setHasNextPage: SetHasNextPage) => {
     if (this.timeoutId) clearTimeout(this.timeoutId);
 
-    this.productsService.retInitProducts();
+    this.productsService.reInitProducts();
 
     this.timeoutId = setTimeout(async () => {
       if (!this.productsService.getProductsLength()) {
@@ -62,7 +68,7 @@ class ProductsController {
       ?.classList.toggle("hidden");
     const result = await this.productsApiService.getProductById(id);
 
-    this.productsService.replaceProduct(result);
+    this.productsService.replaceProductInProducts(result);
     this.productsService.setProduct(result);
   };
   toggleCreateProductModal = () => {
@@ -72,11 +78,11 @@ class ProductsController {
       ?.classList.toggle("hidden");
   };
   createProduct = async (values: CreateProductFormikValues) => {
-    const { categoryId, file, name, price } = values;
+    const { category, file, name, price } = values;
 
     const productResult = await this.productsApiService.createProduct({
       name,
-      categoryId,
+      category,
       price: Number((price as string).replace(/,/g, "")),
     });
     if (file)
@@ -88,7 +94,7 @@ class ProductsController {
 
     const result = await this.productsApiService.getAllProducts(1, 10, "");
 
-    this.productsService.retInitProducts();
+    this.productsService.reInitProducts();
     this.productsService.setProducts(result);
 
     document
@@ -102,6 +108,33 @@ class ProductsController {
         type: "success",
       });
     }, 600);
+  };
+  updateProduct = async (
+    values: UpdateProductFormikValues,
+    productId: string
+  ) => {
+    await this.productsApiService.updateProduct(
+      {
+        ...values,
+        price: Number((values.price as string).replace(/,/g, "")),
+      },
+      productId
+    );
+
+    const result = await this.productsApiService.getProductById(productId);
+
+    this.toggleModales("modal2");
+
+    this.productsService.replaceProductInProducts(result);
+    this.productsService.setProduct(result);
+
+    setTimeout(() => {
+      this.alertService.addDismissAlert({
+        message: "محصول با موفقیت ویرایش شد",
+        open: true,
+        type: "success",
+      });
+    }, 400);
   };
   removeProductById = async (productId: string) => {
     const result = this.productsService.getProductById(false, productId);
@@ -126,22 +159,20 @@ class ProductsController {
       productId
     );
 
-    this.productsService.replaceProduct(productResult);
+    this.productsService.replaceProductInProducts(productResult);
     this.productsService.setProduct(productResult);
   };
   pullProductFile = async (fileId: string, productId: string) => {
     const productState = this.productsService.getProductById(false, productId);
-    const productsState = this.productsService.getProducts(false);
-    console.log(productState);
-    console.log(productsState);
-    // if (productState?.files.length === 1) {
-    this.alertService.addDismissAlert({
-      message: "تعداد کمتر از یک فایل مجاز نیست",
-      open: true,
-      type: "error",
-    });
-    //   return;
-    // }
+
+    if (productState?.files.length === 1) {
+      this.alertService.addDismissAlert({
+        message: "تعداد کمتر از یک فایل مجاز نیست",
+        open: true,
+        type: "error",
+      });
+      return;
+    }
 
     await this.filesApiService.deleteFile({
       entityId: productId,
@@ -153,8 +184,23 @@ class ProductsController {
       productId
     );
 
-    this.productsService.replaceProduct(productResult);
+    this.productsService.replaceProductInProducts(productResult);
     this.productsService.setProduct(productResult);
+  };
+
+  private toggleModales = (modal: SelectModal) => {
+    let selectedModal: string;
+
+    switch (modal) {
+      case "modal1":
+        selectedModal = this.productsService.modalId1;
+        break;
+      case "modal2":
+        selectedModal = this.productsService.modalId2;
+        break;
+    }
+
+    document.getElementById(selectedModal)?.classList.toggle("hidden");
   };
 }
 

@@ -20,7 +20,7 @@ import { CreateProductFormikValues } from "@/app/products/interfaces";
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("نام محصول ضروری است"),
   price: Yup.mixed().required("قیمت ضروری است"),
-  categoryId: Yup.string().required("دسته بندی ضروری است"),
+  category: Yup.string().required("دسته بندی ضروری است"),
   file: Yup.mixed()
     .required("فایل محصول ضروری است")
     .test("fileSize", "حجم فایل نباید بیشتر از 5 مگابایت باشد", (value) => {
@@ -69,7 +69,7 @@ function Form2(props: Form1Props) {
   const initialValues: CreateProductFormikValues = {
     name: "",
     file: null,
-    categoryId: "",
+    category: "",
     price: "",
   };
 
@@ -182,17 +182,20 @@ function Form2(props: Form1Props) {
                     {/* <sub-category> */}
                     <div className="col-span-2 sm:col-span-1">
                       <label
-                        htmlFor="categoryId"
+                        htmlFor="category"
                         className="invisible block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                       >
                         xxx
                       </label>
                       <Field
                         as="select"
-                        id="categoryId"
-                        name="categoryId"
+                        id="category"
+                        name="category"
                         className="bg-gray-50 border  h-11 max-h-11 px-2.5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                       >
+                        <option>
+                          <p className="text-sm">انتخاب کنید</p>
+                        </option>
                         {!props.subCategories.length ? (
                           <option disabled>یافت نشد</option>
                         ) : (
@@ -209,7 +212,7 @@ function Form2(props: Form1Props) {
                       </Field>
                       <ErrorMessage
                         className="mt-2 text-red-700 text-sm font-bold"
-                        name="categoryId"
+                        name="category"
                         component="div"
                       />
                     </div>

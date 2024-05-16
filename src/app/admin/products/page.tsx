@@ -17,7 +17,7 @@ function Products() {
     );
   }
   const loadProductsAndSetPagination = function () {
-    AdminModule.productsService.retInitProducts();
+    AdminModule.productsService.reInitProducts();
     AdminModule.productsController.loadProductsAndSetPagination(
       page,
       search,
@@ -55,6 +55,7 @@ function Products() {
         toggleFn={AdminModule.productsController.toggleCreateProductModal}
       />
       <Modal2
+        updateProduct={AdminModule.productsController.updateProduct}
         pushFileForProduct={AdminModule.productsController.pushFileForProduct}
         product={AdminModule.productsService.getProduct()}
         categories={AdminModule.categoriesService.getMainCategories()}

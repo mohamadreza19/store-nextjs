@@ -25,16 +25,10 @@ const productsSlice = createSlice({
       );
     },
     replaceProduct(state, action: PayloadAction<Product>) {
-      // const copy = [...current(state.data)];
-      // const findProductIndex = state.data.findIndex(
-      //   (p) => p._id === action.payload._id
-      // );
-      // const findProductIndex = copy.findIndex(
-      //   (p) => p._id === action.payload._id
-      // );
-      // console.log(findProductIndex);
-      // copy.splice(findProductIndex, 1, action.payload);
-      // console.log(copy);
+      const findProductIndex = state.data.findIndex(
+        (p) => p._id === action.payload._id
+      );
+      state.data[findProductIndex] = action.payload;
     },
     reInit() {
       return initialState;

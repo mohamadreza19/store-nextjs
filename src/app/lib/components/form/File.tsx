@@ -3,9 +3,9 @@ import { Button1 } from "../button";
 import React, { ChangeEvent } from "react";
 
 interface FileInputProps {
-  name: string;
+  name?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  file: File | null;
+  file?: File | null;
 }
 
 const FileInput: React.FC<FileInputProps> = ({ name, onChange, file }) => {
@@ -19,7 +19,6 @@ const FileInput: React.FC<FileInputProps> = ({ name, onChange, file }) => {
     const el = document.querySelector(
       `input[name=${name}]`
     ) as HTMLInputElement;
-
     el.click();
   }
 
@@ -28,26 +27,17 @@ const FileInput: React.FC<FileInputProps> = ({ name, onChange, file }) => {
       id="default_size"
       className=" h-11 max-h-11 flex items-center p-1  w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
     >
-      <Button1 onClick={clickHiddenInput} children="انتخاب فایل" />
+      <Button1
+        type="button"
+        onClick={clickHiddenInput}
+        children="انتخاب فایل"
+      />
       <input
         id="input-file-1"
         type="file"
         name={name}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           onChange(e);
-          const prevInput = document.getElementById(
-            "input-file-1"
-          ) as HTMLInputElement;
-          const newInput = document.createElement("input");
-
-          newInput.onchange = onChange as any;
-          newInput.id = prevInput.id;
-          newInput.type = prevInput.id;
-          newInput.name = prevInput.name;
-          newInput.type = prevInput.type;
-          newInput.style.display = "none";
-
-          prevInput?.replaceWith(newInput);
         }}
         className="hidden"
       />

@@ -7,52 +7,23 @@ import {
   FormikProps,
 } from "formik";
 import * as Yup from "yup";
-import { Button1 } from "../button";
+import { Button1 } from "../../button";
 import { MdClose } from "react-icons/md";
 
-import FileInput from "./File";
+import FileInput from "../File";
 import { ChangeEvent, useEffect, useState } from "react";
-import LocaleBasedInput from "./LocaleBasedInput";
-import { NumberService } from "../../services";
+import LocaleBasedInput from "../LocaleBasedInput";
+import { NumberService } from "../../../services";
 import { Category } from "@/app/categories/interfaces";
-import { CreateProductFormikValues, Product } from "@/app/products/interfaces";
+import { UpdateProductFormikValues } from "@/app/products/interfaces";
 import Image from "next/image";
-import { Card2 } from "../card";
+import { Card2 } from "../../card";
 import config from "config";
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required("نام محصول ضروری است"),
-  price: Yup.mixed().required("قیمت ضروری است"),
-  categoryId: Yup.string().required("دسته بندی ضروری است"),
-  file: Yup.mixed()
-    .required("فایل محصول ضروری است")
-    .test("fileSize", "حجم فایل نباید بیشتر از 5 مگابایت باشد", (value) => {
-      // Check if file size is less than or equal to 5 MB
-      return value && (value as File).size <= 5242880; // 5 MB in bytes
-    })
-    .test("fileType", "فرمت فایل باید mp4 یا webp باشد", (value) => {
-      return (
-        (value && (value as File).type === "videp/mp4") ||
-        (value as File).type.startsWith("image/webp")
-      );
-    }),
-});
-
-type SetSubCategoryId = (categoryId: string) => void;
-interface Form1Props {
-  handleFormSubmit: (values: any) => void;
-  fetchSubCategoriesByParentId: SetSubCategoryId;
-  pushFileForProduct: (file: File, productId: string) => void;
-  pullProductFile: (fileId: string, productId: string) => void;
-  onClose: () => void;
-  categories: Category[];
-  subCategories: Category[];
-  product: Product;
-}
+import { Form1Props, validationSchema } from "./helper";
 
 function formatNumAndHandleChange(
   e: React.ChangeEvent<HTMLInputElement>,
-  formikProps: FormikProps<CreateProductFormikValues>
+  formikProps: FormikProps<UpdateProductFormikValues>
 ) {
   formikProps.setFieldValue(
     e.target.name,
@@ -63,10 +34,9 @@ function formatNumAndHandleChange(
 function Form3(props: Form1Props) {
   // const  [initialValues,setInitialValues]  = useState(props.product)
 
-  const initialValues: CreateProductFormikValues = {
+  const initialValues: UpdateProductFormikValues = {
     name: props.product.name,
-    file: null,
-    categoryId: props.product?.category._id,
+    category: props.product?.category._id,
     price: NumberService.toformatEnNumber(props.product.price),
   };
 
@@ -78,7 +48,7 @@ function Form3(props: Form1Props) {
         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              افزودن محصول
+              ویرایش محصول
             </h3>
             <button
               type="button"
@@ -93,7 +63,12 @@ function Form3(props: Form1Props) {
 
           <Formik
             enableReinitialize
-            onSubmit={props.handleFormSubmit}
+            onSubmit={(val) => {
+              console.log(val);
+              try {
+                props.handleFormSubmit(val, props.product._id);
+              } catch (error) {}
+            }}
             // onReset={formik.handleReset}
 
             initialValues={initialValues}
@@ -188,8 +163,8 @@ function Form3(props: Form1Props) {
                       </label>
                       <Field
                         as="select"
-                        id="categoryId"
-                        name="categoryId"
+                        id="category"
+                        name="category"
                         className="bg-gray-50 border  h-11 max-h-11 px-2.5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                       >
                         {!props.subCategories.length ? (
@@ -214,7 +189,7 @@ function Form3(props: Form1Props) {
                       </Field>
                       <ErrorMessage
                         className="mt-2 text-red-700 text-sm font-bold"
-                        name="categoryId"
+                        name="category"
                         component="div"
                       />
                     </div>
@@ -247,11 +222,8 @@ function Form3(props: Form1Props) {
                         فایل های محصول
                       </label>
                       <FileInput
-                        file={formikProps.values.file}
-                        name="file-"
+                        name="file-update-product"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          console.log("test");
-
                           if (e.target.files?.length)
                             props.pushFileForProduct(
                               e.target.files[0],
@@ -281,7 +253,7 @@ function Form3(props: Form1Props) {
                         clip-rule="evenodd"
                       ></path>
                     </svg>
-                    <p className="text-sm ">افزودن محصول جدید</p>
+                    <p className="text-sm ">ویرایش محصول </p>
                   </Button1>
                 </Form>
               );

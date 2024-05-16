@@ -1,12 +1,17 @@
 import { Category } from "@/app/categories/interfaces";
 import { Form3 } from "../form";
-import { Product } from "@/app/products/interfaces";
+import {
+  Product,
+  UpdateProductBody,
+  UpdateProductFormikValues,
+} from "@/app/products/interfaces";
 interface Modal2Props {
   // createProduct: (values: any) => void;
   // toggleFn: () => void;
   // fetchSubCategoriesByParentId: (categoryId: string) => void;
   pushFileForProduct: (file: File, productId: string) => void;
   pullProductFile: (fileId: string, productId: string) => void;
+  updateProduct: (values: UpdateProductFormikValues, productId: string) => void;
   product: Product;
   modalId: string;
   categories: Category[];
@@ -22,13 +27,13 @@ function Modal2(props: Modal2Props) {
       <div
         id={props.modalId}
         aria-hidden="true"
-        className=" overflow-y-auto overflow-x-hidden absolute top-1/2 left-1/2   z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        className=" hidden overflow-y-auto overflow-x-hidden absolute top-1/2 left-1/2   z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
       >
         <Form3
           pushFileForProduct={props.pushFileForProduct}
           pullProductFile={props.pullProductFile}
           product={props.product}
-          handleFormSubmit={(va) => {}}
+          handleFormSubmit={props.updateProduct}
           fetchSubCategoriesByParentId={() => {}}
           categories={props.categories}
           subCategories={props.subcategories}

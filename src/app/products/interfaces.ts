@@ -1,7 +1,7 @@
-import { User } from '../admin/interfaces';
-import { Category } from '../categories/interfaces';
-import ProductsController from './products.controller';
-import ProductsService from './products.service';
+import { User } from "../admin/interfaces";
+import { Category } from "../categories/interfaces";
+import ProductsController from "./products.controller";
+import ProductsService from "./products.service";
 
 export type Product = {
   _id: string;
@@ -25,16 +25,23 @@ export type AllProductsResponse = {
     page: number;
   };
 };
-export type CreateProductBody = {
+export interface CreateProductBody {
   name: string;
   price: number;
-  categoryId: string;
-};
+  category: string;
+}
+
+export interface UpdateProductBody extends CreateProductBody {}
 export type CreateProductFormikValues = {
   file: null | File;
   name: string;
   price: string | number;
-  categoryId: string;
+  category: string;
+};
+export type UpdateProductFormikValues = {
+  name: string;
+  price: string | number;
+  category: string;
 };
 export type CreateProductResponse = {
   name: string;
@@ -52,3 +59,5 @@ export type ProductsInjectionEntities = {
   productsService: ProductsService;
   productsController: ProductsController;
 };
+
+export type SelectModal = "modal1" | "modal2";

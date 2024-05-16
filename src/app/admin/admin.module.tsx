@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useMemo } from "react";
 
-import { useRouter } from 'next/navigation';
-import { AdminSideBar } from '../lib/components';
-import { ModuleProps } from '../lib/shared/interfaces';
-import AdminFactory from './admin.factory';
-import { AdminInjectionEntities } from './interfaces';
+import { useRouter } from "next/navigation";
+import { AdminSideBar } from "../lib/components";
+import { ModuleProps } from "../lib/shared/interfaces";
+import AdminFactory from "./admin.factory";
+import { AdminInjectionEntities } from "./interfaces";
 
 const InjectionContext = createContext({});
 
@@ -18,14 +18,14 @@ function AdminModule({ children }: { children: React.ReactNode }) {
   );
 
   useEffect(() => {
-    memorizedModlue.adminController.redirectToDashboardIfAuthorized();
+    // memorizedModlue.adminController.redirectToDashboardIfAuthorized();
   }, []);
 
   return (
     <InjectionContext.Provider value={memorizedModlue}>
       <main
         className={`flex w-full h-screen bg-stone-50 ${
-          !memorizedModlue.adminService.shouldRenderSharedSideBar && 'px-3'
+          !memorizedModlue.adminService.shouldRenderSharedSideBar && "px-3"
         }`}
       >
         {memorizedModlue.adminService.shouldRenderSharedSideBar && (
