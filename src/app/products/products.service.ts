@@ -1,4 +1,4 @@
-import GlobalStoreService from "../lib/services/GlobalStoreService";
+import GlobalStoreService from "@/lib/services/GlobalStoreService";
 import { AllProductsResponse, Product } from "./interfaces";
 import { productSliceActions } from "./reducer/product.slice";
 import { productsSliceActions } from "./reducer/products.slice";

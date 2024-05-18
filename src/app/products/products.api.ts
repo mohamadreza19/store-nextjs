@@ -1,5 +1,5 @@
 import axios from "axios";
-import ApiService from "../lib/services/api/ApiService";
+
 import {
   AllProductsResponse,
   CreateProductBody,
@@ -7,6 +7,7 @@ import {
   Product,
   UpdateProductBody,
 } from "./interfaces";
+import ApiService from "@/lib/services/api/ApiService";
 
 class ProductsApiService extends ApiService {
   constructor() {

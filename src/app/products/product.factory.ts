@@ -1,9 +1,10 @@
+import { ModuleFactory } from "@/lib/shared/interfaces";
 import FilesApiService from "../files/files.api";
-import { AlertService } from "../lib/services";
-import { ModuleFactory } from "../lib/shared/interfaces";
+
 import ProductsApiService from "./products.api";
 import ProductsController from "./products.controller";
 import ProductsService from "./products.service";
+import { AlertService } from "@/lib/services";
 
 class ProuctsFactory implements ModuleFactory {
   static createInstances() {

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".", // Set the base directory here
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,10 +20,10 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@components/*": ["./src/app/components/*"],
-      "@lib/*": ["./src/app/lib/*"],
-      "@api/*": ["./src/app/lib/services/api/*"],
-      "config": ["./src/app/config.ts"]
+      "@components/*": ["./src/components/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@api/*": ["./src/lib/services/api/*"],
+      "config": ["./src/lib/config.ts"]
     },
     "target": "ES2017"
   },
