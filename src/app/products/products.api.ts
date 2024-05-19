@@ -7,7 +7,7 @@ import {
   Product,
   UpdateProductBody,
 } from "./interfaces";
-import ApiService from "@/lib/services/api/ApiService";
+import ApiService from "@lib/services/api/ApiService";
 
 class ProductsApiService extends ApiService {
   constructor() {

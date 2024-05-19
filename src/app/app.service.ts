@@ -1,4 +1,4 @@
-import GlobalStoreService from "@/lib/services/GlobalStoreService";
+import GlobalStoreService from "@lib/services/GlobalStoreService";
 
 class AppService extends GlobalStoreService {
   // Add service methods here

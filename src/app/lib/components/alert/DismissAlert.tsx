@@ -3,7 +3,7 @@ import { AlertService } from "../../services";
 import { Transition1 } from "../transition";
 interface DismissAlertProps {
   open: boolean;
-  type: "success" | "error" | "blue";
+  type: "success" | "error" | "blue" | "black";
   message: string;
   closeFn: () => void;
 }
@@ -25,6 +25,7 @@ function DismissAlert() {
         <DismissAlertBlue closeFn={closeFn} {...dismissAlertvalue} />
         <DismissAlertSuccess closeFn={closeFn} {...dismissAlertvalue} />
         <DismissAlertError closeFn={closeFn} {...dismissAlertvalue} />
+        <DismissAlertBlack closeFn={closeFn} {...dismissAlertvalue} />
       </>
     )
   );
@@ -186,6 +187,36 @@ function DismissAlertError(props: DismissAlertProps) {
             >
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>
+          </div>
+        </Transition1>
+      )}
+    </>
+  );
+}
+function DismissAlertBlack(props: DismissAlertProps) {
+  const btn = "text-sky-500";
+  const color = "text-white bg-black ";
+  return (
+    <>
+      {props.type === "black" && (
+        <Transition1>
+          <div
+            onClick={props.closeFn}
+            id="alert-1"
+            className={`min-w-28  max-w-80  flex  justify-center absolute top-5 left-1/2 transform -translate-x-1/2  z-50  p-4 mb-4 rounded-lg ${color}`}
+            role="alert"
+          >
+            <div className="ms-3 text-sm font-medium leading-7">
+              {props.message}
+            </div>
+            <button
+              type="button"
+              className={` ms-3  rounded-lg focus:ring-2 p-1.5  inline-flex items-center justify-center h-8 w-8 ${btn}`}
+              data-dismiss-target="#alert-1"
+              aria-label="Close"
+            >
+              باشه
+            </button>
           </div>
         </Transition1>
       )}

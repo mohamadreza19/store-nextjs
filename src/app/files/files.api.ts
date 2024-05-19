@@ -1,4 +1,4 @@
-import ApiService from "@/lib/services/api/ApiService";
+import ApiService from "@lib/services/api/ApiService";
 import { deleteFile, FilesResponse, UploadFiles } from "./interfaces";
 
 class FilesApiService extends ApiService {

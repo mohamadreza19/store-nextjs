@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useFormik } from 'formik';
-import { FunctionComponent, InputHTMLAttributes } from 'react';
+import { useFormik } from "formik";
+import { FunctionComponent, InputHTMLAttributes } from "react";
 
 interface InputText1Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -17,11 +17,11 @@ const InputNumber1: FunctionComponent<InputText1Props> = ({
 }) => {
   const formik = useFormik({
     initialValues: {
-      email: '',
+      email: "",
     },
     onSubmit(values, formikHelpers) {
       if (!values.email) {
-        formikHelpers.setFieldError('email', 'لطفا این قسمت را خالی نگذارید');
+        formikHelpers.setFieldError("email", "لطفا این قسمت را خالی نگذارید");
       }
     },
   });
@@ -30,9 +30,9 @@ const InputNumber1: FunctionComponent<InputText1Props> = ({
       <input
         {...rest}
         className={`w-full px-3  py-[0.70rem] border border-solid rounded-md  ${
-          textCenter && 'text-center'
+          textCenter && "text-center"
         } ${
-          error ? 'border-red-700' : 'border-gray-400'
+          error ? "border-red-700" : "border-gray-400"
         } focus:outline-none focus:ring-1`}
         type="text"
       />

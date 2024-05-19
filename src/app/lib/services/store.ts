@@ -4,8 +4,7 @@ import { PluseLoading } from "../features/loading";
 
 import { product, products } from "@/app/products/reducer";
 import { categories } from "@/app/categories/reducers";
-
-import { apiCallStatus } from "../shared/reducers";
+import apiCallStatus from "../features/apiCallStatus/apiCallStatus";
 
 const store = configureStore({
   reducer: {

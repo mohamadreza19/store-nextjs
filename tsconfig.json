@@ -20,10 +20,10 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@api/*": ["./src/lib/services/api/*"],
-      "config": ["./src/lib/config.ts"]
+      "@components/*": ["./src/app/lib/components/*"],
+      "@lib/*": ["./src/app/lib/*"],
+      "@api/*": ["./src/app/lib/services/api/*"],
+      "config": ["./src/app/lib/config.ts"]
     },
     "target": "ES2017"
   },

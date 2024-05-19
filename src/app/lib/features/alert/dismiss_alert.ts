@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface DismissAlertProps {
   open: boolean;
-  type: "success" | "error" | "blue";
+  type: "success" | "error" | "blue" | "black";
   message: string;
 }
 const initialState: DismissAlertProps = {
   open: false,
-  type: "blue",
+  type: "black",
   message: "",
 };
 

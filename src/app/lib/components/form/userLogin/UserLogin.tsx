@@ -1,22 +1,22 @@
-'use client';
-import Image from 'next/image';
-import React, { FunctionComponent } from 'react';
-import InputText1 from '../InputText1';
-import { ApiCallStatus, UserLoginStep } from '@/lib/shared/interfaces';
-import { useFormik } from 'formik';
+"use client";
+import Image from "next/image";
+import React, { FunctionComponent } from "react";
+import InputText1 from "../InputText1";
+import { ApiCallStatus, UserLoginStep } from "@lib/shared/interfaces";
+import { useFormik } from "formik";
 
 interface UserLoginState {}
 
 function UserLogin(props: UserLoginStep) {
   const formik = useFormik({
     initialValues: {
-      email: '',
+      email: "",
     },
     onSubmit(values, formikHelpers) {
       if (!values.email)
         return formikHelpers.setFieldError(
-          'email',
-          'لطفا این قسمت را خالی نگذارید'
+          "email",
+          "لطفا این قسمت را خالی نگذارید"
         );
 
       props.submit(values.email);
@@ -35,7 +35,7 @@ function UserLogin(props: UserLoginStep) {
       <InputText1
         error={formik.errors.email || props.apiCallStatus?.error?.message}
         onChange={(e) => {
-          formik.setFieldValue('email', e.target.value);
+          formik.setFieldValue("email", e.target.value);
         }}
       />
       <button

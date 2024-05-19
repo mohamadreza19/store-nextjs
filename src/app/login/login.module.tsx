@@ -3,13 +3,18 @@ import React, { createContext, useContext, useMemo } from "react";
 
 import LoginFactory from "./login.factory";
 import { LoginInjectionEntities } from "./interfaces";
+import { useRouter } from "next/navigation";
 
 const InjectionContext = createContext({});
 
 interface LoginModuleState {}
 
 function LoginModule({ children }: { children: React.ReactNode }) {
-  const memorizedModlue = useMemo(() => LoginFactory.createInstances(), []);
+  const router = useRouter();
+  const memorizedModlue = useMemo(
+    () => LoginFactory.createInstances(router),
+    []
+  );
 
   return (
     <InjectionContext.Provider value={memorizedModlue}>

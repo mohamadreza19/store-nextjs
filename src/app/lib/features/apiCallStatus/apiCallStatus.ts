@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ApiCallStatus } from "../interfaces";
+import { ApiCallStatus } from "../../shared/interfaces";
 
 const initialState: ApiCallStatus = {
   status: "idle",

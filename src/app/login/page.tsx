@@ -1,17 +1,14 @@
-'use client';
-import { UserLogin, VerifyCode } from '@/lib/components';
+"use client";
+import { UserLogin, VerifyCode } from "@lib/components";
 import React, {
   FunctionComponent,
   ReactEventHandler,
   useEffect,
   useState,
-} from 'react';
-import LoginModule, { useLoginInjection } from './login.module';
-import InputText1 from '@/lib/components/form/InputText1';
-import Image from 'next/image';
+} from "react";
+import LoginModule, { useLoginInjection } from "./login.module";
 
-import { MdArrowBack, MdArrowForward } from 'react-icons/md';
-import { ApiCallStatus } from '@/lib/shared/interfaces';
+import { ApiCallStatus } from "@lib/shared/interfaces";
 
 interface LoginProps {}
 interface Step {
@@ -26,7 +23,7 @@ const Login: FunctionComponent<LoginProps> = () => {
   const { authService, authController } = useLoginInjection();
   const apiCallStatus = authService.getApiStatus();
   const [step, setStep] = useState<number>(1);
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
 
   function sendOtpCode(email: string) {
     authController.sendOtpCode(email, setEmail);
@@ -51,19 +48,13 @@ const Login: FunctionComponent<LoginProps> = () => {
   // );
   switch (step) {
     case 1:
-      return (
-        <UserLogin
-          apiCallStatus={apiCallStatus}
-          onChange={(e) => authController.handleEmailChange(setEmail, e)}
-          submit={sendOtpCode}
-        />
-      );
+      return <UserLogin apiCallStatus={apiCallStatus} submit={sendOtpCode} />;
     case 2:
       return (
         <VerifyCode
+          apiCallStatus={apiCallStatus}
           email={email}
-          onChange={() => {}}
-          submit={(e) => {}}
+          submit={authController.verifyOtp}
           secondSubmit={RefreshOtpCode}
           decrement={stepDecrement}
         />

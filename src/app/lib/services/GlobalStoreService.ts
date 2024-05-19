@@ -1,9 +1,9 @@
 import { Dispatch, Store } from "redux";
 import store, { RootState } from "./store";
 import { TypedUseSelectorHook, UseSelector, useSelector } from "react-redux";
-import { apiCallStatus } from "../shared/reducers";
+
 import { ApiCallStatus } from "../shared/interfaces";
-import { apiCallStatusSliceActions } from "../shared/reducers/apiCallStatus";
+import { apiCallStatusSliceActions } from "../features/apiCallStatus/apiCallStatus";
 
 type UseSelectorFunction = () => TypedUseSelectorHook<RootState>;
 
