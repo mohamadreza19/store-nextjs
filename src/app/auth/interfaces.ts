@@ -1,7 +1,11 @@
-import AuthService from "./auth.service";
-import AuthController from "./auth.controller";
-import { Dispatch, SetStateAction } from "react";
+import AuthService from './auth.service';
+import AuthController from './auth.controller';
+import { Dispatch, SetStateAction } from 'react';
 export type AuthResponse = {};
+export type AuthSendVerifyCodeResponse = {
+  message: string;
+  userRegistered: boolean;
+};
 export type AuthVerifyCodeResponse = {
   message: string;
   userRegistered: boolean;

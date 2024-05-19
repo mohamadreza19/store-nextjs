@@ -1,3 +1,5 @@
+import LocaledNumber from '../components/LocaledNumber';
+
 type Dir = 'rtl' | 'lrt';
 class NumberService {
   static toformatEnNumber(num: any) {
@@ -14,6 +16,25 @@ class NumberService {
   }
   static filterStringToEnNumber(val: string) {
     return val.toString().replace(/\D/g, '');
+  }
+  static formatTime(time: number) {
+    const minutes = LocaledNumber({
+      number: Math.floor(time / 60),
+    });
+    const remainingSeconds = LocaledNumber({
+      number: time % 60,
+    });
+    return `${String(minutes).padStart(
+      2,
+      LocaledNumber({
+        number: 0,
+      })
+    )}:${String(remainingSeconds).padStart(
+      2,
+      LocaledNumber({
+        number: 0,
+      })
+    )}`;
   }
 }
 
