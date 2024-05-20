@@ -9,7 +9,6 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 
 class AuthFactory implements ModuleFactory {
   static createInstances(router: AppRouterInstance): AuthInjectionEntities {
-    console.log(router);
     const authService = new AuthService();
 
     const authController = new AuthController(

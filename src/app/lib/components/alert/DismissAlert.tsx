@@ -211,7 +211,7 @@ function DismissAlertBlack(props: DismissAlertProps) {
             </div>
             <button
               type="button"
-              className={` ms-3  rounded-lg focus:ring-2 p-1.5  inline-flex items-center justify-center h-8 w-8 ${btn}`}
+              className={` ms-3 text-sm  rounded-lg focus:ring-2 p-1.5  inline-flex items-center justify-center h-8 w-8 ${btn}`}
               data-dismiss-target="#alert-1"
               aria-label="Close"
             >

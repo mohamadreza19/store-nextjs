@@ -1,3 +1,4 @@
+import { SetFormikErrorField } from "@/app/auth/interfaces";
 import { ButtonHTMLAttributes, ReactNode, SetStateAction } from "react";
 
 export interface ModuleProps {
@@ -23,7 +24,10 @@ export interface ApiCallStatus {
 
 export interface UserLoginStep {
   sendVerifyCode?: (email: string) => void;
-  submit: (value: string) => void;
+  submit: (
+    value: string,
+    setFormikEmailErrorField: SetFormikErrorField
+  ) => void;
   secondSubmit?: () => void;
   increment?: () => void;
   decrement?: () => void;

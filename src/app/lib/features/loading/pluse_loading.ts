@@ -4,7 +4,7 @@ interface InitialState {
   loading: boolean;
 }
 const initialState: InitialState = {
-  loading: false,
+  loading: true,
 };
 
 const pluse_loading = createSlice({

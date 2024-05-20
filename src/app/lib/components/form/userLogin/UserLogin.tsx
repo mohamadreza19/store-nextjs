@@ -19,7 +19,7 @@ function UserLogin(props: UserLoginStep) {
           "لطفا این قسمت را خالی نگذارید"
         );
 
-      props.submit(values.email);
+      props.submit(values.email, formik.setFieldError);
     },
   });
 
@@ -33,7 +33,8 @@ function UserLogin(props: UserLoginStep) {
         لطفا ایمیل خود را وارد کنید
       </p>
       <InputText1
-        error={formik.errors.email || props.apiCallStatus?.error?.message}
+        onEnterDown={formik.submitForm}
+        error={formik.errors.email}
         onChange={(e) => {
           formik.setFieldValue("email", e.target.value);
         }}

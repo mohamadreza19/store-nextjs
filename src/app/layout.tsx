@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientProvider from "@lib/services/ClientProvider";
-import ErrorCatchService from "@/lib/services/ErrorCatchService";
+import ErrorCatchService from "@lib/services/ErrorCatchService";
+import AppModule from "./app.module";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function RootLayout({
     <html lang="fa">
       <body dir="rtl" className={inter.className}>
         <ClientProvider>
-          {children}
+          <AppModule>{children}</AppModule>
           {/* <ErrorCatchService>{children} </ErrorCatchService> */}
         </ClientProvider>
       </body>

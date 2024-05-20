@@ -9,15 +9,9 @@ import React, {
 import LoginModule, { useLoginInjection } from "./login.module";
 
 import { ApiCallStatus } from "@lib/shared/interfaces";
+import { SetFormikErrorField } from "../auth/interfaces";
 
 interface LoginProps {}
-interface Step {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  sendVerifyCode?: (email: string) => void;
-  submit: (email: string) => void;
-  email?: string;
-  apiCallStatus?: ApiCallStatus;
-}
 
 const Login: FunctionComponent<LoginProps> = () => {
   const { authService, authController } = useLoginInjection();
@@ -25,12 +19,19 @@ const Login: FunctionComponent<LoginProps> = () => {
   const [step, setStep] = useState<number>(1);
   const [email, setEmail] = useState<string>("");
 
-  function sendOtpCode(email: string) {
-    authController.sendOtpCode(email, setEmail);
-    stepIncrement();
+  function sendOtpCode(
+    email: string,
+    setFormikEmailErrorField: SetFormikErrorField
+  ) {
+    authController.sendOtpCode(
+      email,
+      setEmail,
+      setFormikEmailErrorField,
+      setStep
+    );
   }
   function RefreshOtpCode() {
-    authController.sendOtpCode(email, setEmail);
+    authController.refreshOtpCode(email);
   }
   function stepIncrement() {
     authController.stepIncrement(setStep);
@@ -38,14 +39,7 @@ const Login: FunctionComponent<LoginProps> = () => {
   function stepDecrement() {
     authController.stepDecrement(setStep);
   }
-  // useEffect(() => {
-  //   stepIncrement();
-  // }, []);
-  // return (
-  //   <span className=" text-center text-sky-700 cursor-pointer font font-semibold">
-  //     da
-  //   </span>
-  // );
+
   switch (step) {
     case 1:
       return <UserLogin apiCallStatus={apiCallStatus} submit={sendOtpCode} />;

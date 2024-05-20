@@ -17,7 +17,10 @@ const VerifyCode: FunctionComponent<UserLoginStep> = (props) => {
       code: "",
     },
     onSubmit(values, formikHelpers) {
-      props.submit(NumberService.filterStringToEnNumber(values.code));
+      props.submit(
+        NumberService.filterStringToEnNumber(values.code),
+        formik.setFieldError
+      );
     },
   });
   let interval = useRef<NodeJS.Timeout>();
@@ -37,7 +40,10 @@ const VerifyCode: FunctionComponent<UserLoginStep> = (props) => {
     if (formik.values.code.length === 10) {
       setLoading(true);
       setTimeout(() => {
-        props.submit(NumberService.filterStringToEnNumber(formik.values.code));
+        props.submit(
+          NumberService.filterStringToEnNumber(formik.values.code),
+          formik.setFieldError
+        );
       }, 400);
     }
   }, [formik.values.code.length]);
@@ -78,6 +84,9 @@ const VerifyCode: FunctionComponent<UserLoginStep> = (props) => {
       if (value.length > 0) {
         formik.setFieldValue("code", value.slice(0, -2)); // Remove the last character
       }
+    }
+    if (event.key === "Enter") {
+      formik.submitForm();
     }
   }
 

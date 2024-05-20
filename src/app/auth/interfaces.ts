@@ -13,7 +13,10 @@ export type AuthVerifyCodeResponse = {
 
 export type SetStep = Dispatch<SetStateAction<number>>;
 export type SetEmail = Dispatch<SetStateAction<string>>;
-
+export type SetFormikErrorField = (
+  field: string,
+  value: string | undefined
+) => void;
 export interface AuthInjectionEntities {
   authService: AuthService;
   authController: AuthController;
