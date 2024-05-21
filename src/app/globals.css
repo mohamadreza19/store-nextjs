@@ -1,5 +1,5 @@
-@import url("/font-face.css");
-@import url("/typography.css");
+@import url('/font-face.css');
+@import url('/typography.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,7 +23,7 @@ html {
 }
 
 .border-b-fill::after {
-  content: "";
+  content: '';
   display: block;
   width: 0;
   height: 2px;
@@ -36,4 +36,28 @@ html {
 }
 .border-b-fill:hover::after {
   width: 100%;
+}
+
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.custom-bullet {
+  height: 4px;
+  opacity: 0.3;
+  transition: width 0.2s ease-in-out;
+  width: 4px;
+  background-color: #0c0c0c;
+  border-radius: 50%;
+}
+
+.custom-bullet.active {
+  background-color: #fff;
+  border-radius: 9999px;
+  height: 6px;
+  opacity: 1;
+  -webkit-transform: translateY(1px);
+  transform: translateY(1px);
+  width: 16px;
 }
