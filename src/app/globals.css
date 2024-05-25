@@ -8,6 +8,9 @@
 html {
   direction: rtl;
 }
+a {
+  text-decoration: none !important;
+}
 
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -20,6 +23,12 @@ html {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+}
+.dir-rtl {
+  direction: rtl !important;
+}
+.dir-ltr {
+  direction: ltr !important;
 }
 
 .border-b-fill::after {
@@ -36,4 +45,19 @@ html {
 }
 .border-b-fill:hover::after {
   width: 100%;
+}
+
+#mega-menu-parent:hover #mega-menu {
+  visibility: visible;
+  opacity: 100;
+}
+
+.slider-1-bullet-active {
+  background-color: #fff;
+  border-radius: 9999px;
+  height: 6px;
+  opacity: 1;
+  -webkit-transform: translateY(1px);
+  transform: translateY(1px);
+  width: 16px;
 }

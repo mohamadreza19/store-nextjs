@@ -1,5 +1,5 @@
-import CategoriesApiService from './categories.api';
-import CategoriesService from './categories.service';
+import CategoriesApiService from "./categories.api";
+import CategoriesService from "./categories.service";
 
 class CategoriesController {
   constructor(

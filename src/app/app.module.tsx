@@ -9,7 +9,7 @@ import React, {
 
 import AppFactory from "./app.factory";
 import { AppInjectionEntities } from "./interfaces";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LoadingService } from "@lib/services";
 import { MainNavbar } from "@lib/components/navbar";
 
@@ -19,6 +19,7 @@ interface AppModuleState {}
 
 function AppModule({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const loadingService = useMemo(() => new LoadingService(), []);
   const memorizedModlue = useMemo(() => AppFactory.createInstances(router), []);
 
@@ -29,13 +30,23 @@ function AppModule({ children }: { children: React.ReactNode }) {
       loadingService.removePluse();
     };
   }, [document.readyState]);
-  // useEffect(() => {
-  //   memorizedModlue.authController.authorizeUserBasedTokenExist();
-  // }, []);
+
+  useEffect(() => {
+    memorizedModlue.categoriesController.fetchMainCategories();
+    // memorizedModlue.authController.authorizeUserBasedTokenExist();
+  }, []);
 
   return (
     <InjectionContext.Provider value={memorizedModlue}>
-      <MainNavbar />
+      {!pathname.includes("login") && (
+        <MainNavbar
+          fetchSubCategoriesByParentId={
+            memorizedModlue.categoriesController.fetchSubCategoriesByParentId
+          }
+          mainCategories={memorizedModlue.categoriesService.getMainCategories()}
+          subCategories={memorizedModlue.categoriesService.getSubCategories()}
+        />
+      )}
       <main>{children}</main>
     </InjectionContext.Provider>
   );

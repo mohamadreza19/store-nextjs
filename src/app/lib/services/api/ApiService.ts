@@ -3,6 +3,7 @@ import config from "config";
 import TokenStorageService from "../TokenStorageService";
 import LoadingService from "../LoadingService";
 import GlobalStoreService from "../GlobalStoreService";
+import { QueryClient } from "@tanstack/react-query";
 
 type UrlExtension =
   | "auth"
@@ -16,9 +17,19 @@ type UrlExtension =
 enum HttpStatus {
   UNAUTHORIZED = 401,
 }
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 class ApiService {
   protected $axios: AxiosInstance;
+  protected queryClient: QueryClient = queryClient;
   private tokenStorageService = new TokenStorageService();
   private loadingService = new LoadingService();
   private globalStoreService = new GlobalStoreService();

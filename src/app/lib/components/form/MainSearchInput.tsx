@@ -1,16 +1,14 @@
 import React, { ChangeEvent, ReactNode } from "react";
 import { BiSearch } from "react-icons/bi";
-import {
-  CSSTransition,
-  Transition,
-  TransitionGroup,
-} from "react-transition-group";
+import {} from "react-transition-group";
 
 import ClickAwayListener from "react-click-away-listener";
 import { Transition1 } from "../transition";
 
 interface IProps {
   placeHolder: string;
+  openFilterScreen: () => void;
+  closeFilterScreen: () => void;
   // value: string;
   // setValue: (value: string) => void;
 }
@@ -38,9 +36,11 @@ class MainSearchInput extends React.Component<IProps> {
   }
 
   private openSearchBox = () => {
+    this.props.openFilterScreen();
     this.setState({ ...this.state, openSearchBox: true });
   };
   private closeSearchBox = () => {
+    this.props.closeFilterScreen();
     this.setState({ ...this.state, openSearchBox: false });
   };
   private handleChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -88,9 +88,6 @@ class MainSearchInput extends React.Component<IProps> {
             {/* <cover> */}
           </main>
         </ClickAwayListener>
-        {openSearchBox && (
-          <div className=" h-screen  w-screen bg-[#0c0c0c] bg-opacity-30 fixed top-[115px] left-1/2 transform -translate-x-1/2  z-10 flex items-center justify-center"></div>
-        )}
       </>
     );
   }

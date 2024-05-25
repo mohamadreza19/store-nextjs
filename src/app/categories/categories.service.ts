@@ -5,6 +5,12 @@ import { categoriesActions } from "./reducers/categories.slice";
 class CategoriesService extends GlobalStoreService {
   // Add service methods here
 
+  private useSelect = (asHook = true) => {
+    return asHook
+      ? this.getUseSelector()((store) => store.categories)
+      : this.getStore().categories;
+  };
+
   addMainCategories = (categories: CategoriesResponse) => {
     this.dispatch(categoriesActions.addMain(categories));
   };
@@ -14,11 +20,9 @@ class CategoriesService extends GlobalStoreService {
   reInitSubCategories = () => {
     this.dispatch(categoriesActions.reInitSub());
   };
-  getCC = () => {
-    return this.getStore().categories;
-  };
-  getMainCategories = () => {
-    return this.getStore().categories.main;
+
+  getMainCategories = (asHook = true) => {
+    return this.useSelect(asHook).main;
   };
   getSubCategories = () => {
     // return this.getStore().categories.sub;

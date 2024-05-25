@@ -7,18 +7,25 @@ import ProuctsFactory from "./products/product.factory";
 import AuthController from "./auth/auth.controller";
 import AuthFactory from "./auth/auth.factory";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import CategoriesFactory from "./categories/categories.factory";
 
 class AppFactory implements ModuleFactory {
+  private static singletonInstance: AppInjectionEntities | null;
   static createInstances(router: AppRouterInstance): AppInjectionEntities {
-    const appService = new AppService();
-    const appController = new AppController(appService);
+    if (!this.singletonInstance) {
+      const appService = new AppService();
+      const appController = new AppController(appService);
 
-    return {
-      ...AuthFactory.createInstances(router),
-      ...ProuctsFactory.createInstances(),
-      appService,
-      appController,
-    };
+      this.singletonInstance = {
+        ...AuthFactory.createInstances(router),
+        ...ProuctsFactory.createInstances(),
+        ...CategoriesFactory.createInstances(),
+        appService,
+        appController,
+      };
+    }
+
+    return this.singletonInstance;
   }
 }
 export default AppFactory;

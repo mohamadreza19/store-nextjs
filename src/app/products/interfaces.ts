@@ -1,4 +1,3 @@
-import { User } from "../admin/interfaces";
 import { Category } from "../categories/interfaces";
 import ProductsController from "./products.controller";
 import ProductsService from "./products.service";
@@ -7,7 +6,7 @@ export type Product = {
   _id: string;
   name: string;
   category: Category;
-  creator: User;
+  // creator: User;
   price: number;
   off_price: number;
   off_precent: number;

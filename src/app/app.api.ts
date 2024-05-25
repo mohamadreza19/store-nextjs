@@ -1,4 +1,4 @@
-import ApiService from "@/lib/services/api/ApiService";
+import ApiService from "@lib/services/api/ApiService";
 import { AppResponse } from "./interfaces";
 
 class AppApiService extends ApiService {
