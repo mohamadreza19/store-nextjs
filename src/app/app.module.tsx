@@ -19,9 +19,9 @@ interface AppModuleState {}
 
 function AppModule({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const pathname = usePathname();
   const loadingService = useMemo(() => new LoadingService(), []);
   const memorizedModlue = useMemo(() => AppFactory.createInstances(router), []);
+  const pathname = usePathname();
 
   useLayoutEffect(() => {
     loadingService.removePluse();

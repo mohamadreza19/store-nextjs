@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FunctionComponent, useRef } from "react";
+import { FC, FunctionComponent, useEffect, useRef } from "react";
 import { MainSearchInput } from "../../form";
 import { NavbarAuthBtn } from "../../button";
 
@@ -12,20 +12,26 @@ import { BsPostcardHeart } from "react-icons/bs";
 import Navitem from "./Navitem";
 import { useRouter } from "next/navigation";
 import { Category } from "@/app/categories/interfaces";
+import { useScrollThreshold, useScrollToTop } from "@/app/lib/services";
 
 type Props = {
   mainCategories: Category[];
   subCategories: Category[];
   fetchSubCategoriesByParentId: (parentId: string) => Promise<void>;
 };
+
 const MainNavbar: FunctionComponent<Props> = (props) => {
   const filterScreenRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const hasCrossedThreshold = useScrollThreshold(300, () => {});
+  const scroll = useScrollToTop();
+
   const router = useRouter();
   function handleNavigateToLogin() {
     router.push("/login");
   }
-
   function handleOpenFilterScreen() {
+    scroll();
     filterScreenRef.current?.classList.add("opacity-30");
     filterScreenRef.current?.classList.remove("invisible");
   }
@@ -36,66 +42,76 @@ const MainNavbar: FunctionComponent<Props> = (props) => {
 
   return (
     <>
-      <header className="w-full h-[115px] relative drop-shadow md:px-5 md:pt-4 flex flex-col border-b border-solid border-gray-300 z-20">
-        <div className=" w-full flex items-center ">
-          <section className="w-full flex items-center gap-x-4">
-            <Image
-              width={115}
-              height={30}
-              alt="icon"
-              src="/asset/img/logo.svg"
-            />
-            <MainSearchInput
-              openFilterScreen={handleOpenFilterScreen}
-              closeFilterScreen={handleCloseFilterScreen}
-              placeHolder="جستجو"
-            />
-          </section>
-          <section className="flex items-center">
-            <NavbarAuthBtn onClick={handleNavigateToLogin} />
+      <div className="h-[113px]"></div>
+      <header ref={headerRef} className="top-0 w-full fixed z-20 bg-white">
+        <div className="w-full h-auto  relative drop-shadow md:px-5 md:pt-4 flex flex-col border-b border-solid border-gray-300 z-20">
+          <div className=" w-full flex items-center pb-4 ">
+            <section className="w-full flex items-center gap-x-4">
+              <Image
+                width={115}
+                height={30}
+                alt="icon"
+                src="/asset/img/logo.svg"
+              />
+              <MainSearchInput
+                openFilterScreen={handleOpenFilterScreen}
+                closeFilterScreen={handleCloseFilterScreen}
+                placeHolder="جستجو"
+              />
+            </section>
+            <section className={`"hidden"} flex items-center`}>
+              <NavbarAuthBtn onClick={handleNavigateToLogin} />
 
-            <div className="w-[1px] h-[25px] bg-gray-300 ms-3"></div>
+              <div className="w-[1px] h-[25px] bg-gray-300 ms-3"></div>
 
-            <LuShoppingCart
-              className="scale-x-[-1] ms-4 cursor-pointer"
-              size={22}
-            />
-          </section>
-        </div>
-        <div className="flex gap-x-3 h-full pt-4 items-center">
-          <Navitem
-            onMouseEnter={handleOpenFilterScreen}
-            onMouseLeave={handleCloseFilterScreen}
-            borderB_Dir="left"
-            id="mega-menu-parent"
+              <LuShoppingCart
+                className="scale-x-[-1] ms-4 cursor-pointer"
+                size={22}
+              />
+            </section>
+          </div>
+          <div
+            className={`${
+              hasCrossedThreshold && "hidden"
+            } flex gap-x-3 h-full  items-center`}
           >
-            <IoMenu size={20} />
-            <p className="text-sm font-semibold">دسته‌بندی کالاها</p>
+            <Navitem
+              onMouseEnter={handleOpenFilterScreen}
+              onMouseLeave={handleCloseFilterScreen}
+              borderB_Dir="left"
+              id="mega-menu-parent"
+            >
+              <IoMenu size={20} />
+              <p className="text-sm font-semibold">دسته‌بندی کالاها</p>
 
-            <div className="ms-1 my-auto inline-block h-[15px] min-h-[1em] w-[1px] self-stretch bg-gray-300 dark:bg-white/10"></div>
+              <div className="ms-1 my-auto inline-block h-[15px] min-h-[1em] w-[1px] self-stretch bg-gray-300 dark:bg-white/10"></div>
 
-            <MegaMenu
-              id="mega-menu"
-              subCategories={props.subCategories}
-              fetchSubCategoriesByParentId={props.fetchSubCategoriesByParentId}
-              mainCategories={props.mainCategories}
-            />
-          </Navitem>
+              <MegaMenu
+                id="mega-menu"
+                subCategories={props.subCategories}
+                fetchSubCategoriesByParentId={
+                  props.fetchSubCategoriesByParentId
+                }
+                mainCategories={props.mainCategories}
+              />
+            </Navitem>
 
-          <Navitem>
-            <CiPercent size={18} className="fill-neutral-700" />
-            شگفت‌انگیزها
-          </Navitem>
-          <Navitem>
-            <CiShoppingBasket size={18} className="fill-green-800" />
-            سوپرمارکت
-          </Navitem>
-          <Navitem>
-            <BsPostcardHeart size={18} className="fill-neutral-700" />
-            کارت هدیه
-          </Navitem>
+            <Navitem>
+              <CiPercent size={18} className="fill-neutral-700" />
+              شگفت‌انگیزها
+            </Navitem>
+            <Navitem>
+              <CiShoppingBasket size={18} className="fill-green-800" />
+              سوپرمارکت
+            </Navitem>
+            <Navitem>
+              <BsPostcardHeart size={18} className="fill-neutral-700" />
+              کارت هدیه
+            </Navitem>
+          </div>
         </div>
       </header>
+
       <div
         id="filterScreenRef"
         ref={filterScreenRef}

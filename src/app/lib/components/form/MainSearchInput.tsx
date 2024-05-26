@@ -5,7 +5,7 @@ import {} from "react-transition-group";
 import ClickAwayListener from "react-click-away-listener";
 import { Transition1 } from "../transition";
 
-interface IProps {
+export interface MainSearchInputProps {
   placeHolder: string;
   openFilterScreen: () => void;
   closeFilterScreen: () => void;
@@ -16,7 +16,7 @@ interface IState {
   openSearchBox: boolean;
   search: string;
 }
-class MainSearchInput extends React.Component<IProps> {
+class MainSearchInput extends React.Component<MainSearchInputProps> {
   private readonly inputId = "qw24ffd";
   private readonly searchBoxId = "qw23ffd";
   public readonly state: IState = {
@@ -25,7 +25,7 @@ class MainSearchInput extends React.Component<IProps> {
   };
 
   componentDidUpdate(
-    prevProps: Readonly<IProps>,
+    prevProps: Readonly<MainSearchInputProps>,
     prevState: Readonly<IState>,
     snapshot?: any
   ): void {

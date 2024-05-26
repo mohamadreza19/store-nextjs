@@ -39,7 +39,7 @@ const Navitem: FunctionComponent<NavitemProps> = ({
       onMouseLeave={onMouseLeave}
       ref={boxRef}
       id={id}
-      className="flex items-center  gap-x-2 pb-3  h-full  cursor-pointer relative "
+      className="flex items-center  gap-x-2  h-full  cursor-pointer relative "
     >
       {children}
       <div

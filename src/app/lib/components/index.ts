@@ -7,3 +7,4 @@ export * from "./alert";
 export * from "./link";
 export * from "./lists";
 export * from "./modal";
+export * from "./layout";

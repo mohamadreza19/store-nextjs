@@ -43,7 +43,7 @@ const MegaMenu: FunctionComponent<MegaMenuProps> = ({
   return (
     <div
       id={id}
-      className={`flex invisible transition-opacity duration-500  ease-out opacity-0 absolute min-h-96 md:w-[970px] top-full`}
+      className={`flex invisible transition-opacity duration-500  ease-out opacity-0 absolute min-h-96 md:w-[940px] top-full`}
     >
       <div className="dir-ltr md:w-1/5 overflow-y-auto bg-[#f5f5f5] rounded-e-sm">
         {/* <first menu> */}

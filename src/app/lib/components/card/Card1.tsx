@@ -1,19 +1,21 @@
+import Image from "next/image";
 import LocaledNumber from "../LocaledNumber";
+import { FC } from "react";
 
 interface Card1Props {
-  row1Val: string;
-  row2Val: number;
+  text: string;
+  src: string;
 }
-
-function Card1(props: Card1Props) {
+const _c_1 = "";
+const Card1: FC<Card1Props> = ({ text, src }) => {
   return (
-    <div className="flex items-center flex-col font-medium shadow-md w-40 h-36 rounded-md pt-4 ">
-      <p className="text-lg border-b-2 border-gray-600 pb-4">{props.row1Val}</p>
-      <p>
-        <LocaledNumber number={props.row2Val} />
-      </p>
+    <div className="flex items-center justify-center flex-col gap-y-2">
+      <div className="w-28 h-28">
+        <Image width={100} height={100} alt="" src={src} objectFit="contain" />
+      </div>
+      <p className="text-xs text-neutral-700 font-bold">{text}</p>
     </div>
   );
-}
+};
 
 export default Card1;

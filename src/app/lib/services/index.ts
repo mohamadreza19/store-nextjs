@@ -7,4 +7,6 @@ export { default as ClientProvider } from "./ClientProvider";
 export { default as container } from "./inversify.config";
 export { default as isPathInArray } from "./isPathInArray";
 export { default as NumberService } from "./NumberService";
+export { default as useScrollThreshold } from "./useScrollThreshold";
+export { default as useScrollToTop } from "./useScrollToTop";
 export { default as store } from "./store";

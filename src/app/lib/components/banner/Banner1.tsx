@@ -24,8 +24,11 @@ const items = [
 const Banner1: FunctionComponent<Banner1Props> = () => {
   return (
     <div className="w-full flex justify-center items-center">
-      {items.map((item) => (
-        <section className="w-36 h-20 flex flex-col justify-center items-center gap-y-2">
+      {items.map((item, i) => (
+        <section
+          key={i}
+          className="w-36 h-20 flex flex-col justify-center items-center gap-y-2"
+        >
           <Image width={50} height={52} alt="" src={item.src} />
           <p className="text-xs  text-neutral-500 font-bold">{item.text}</p>
         </section>
