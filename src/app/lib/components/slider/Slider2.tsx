@@ -1,60 +1,60 @@
-import Image from "next/image";
-import React, { useRef, useState, useEffect, FC } from "react";
-import { IoIosArrowBack } from "react-icons/io";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Swiper as SwiperCore } from "swiper";
-import Badge1 from "../badge/Badge1";
-import Badge2 from "../badge/Badge2";
-import { NumberService } from "../../services";
-import { ArrowBack, ArrowForward } from "../button";
+import Image from 'next/image';
+import React, { useRef, useState, useEffect, FC } from 'react';
+import { IoIosArrowBack } from 'react-icons/io';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper as SwiperCore } from 'swiper';
+import Badge1 from '../badge/Badge1';
+import Badge2 from '../badge/Badge2';
+import { NumberService } from '../../services';
+import { ArrowBack, ArrowForward } from '../button';
 
 interface Slider2Props {}
 
 const array = [
   {
-    src: "/asset/img/test.webp",
+    src: '/asset/img/test.webp',
     price: NumberService.toLocaledNumber(27000000),
     offPrice: NumberService.toLocaledNumber(20000000),
     offPercent: NumberService.calculatePercentageDecrease(27000000, 20000000),
   },
   {
-    src: "/asset/img/test.webp",
+    src: '/asset/img/test.webp',
     price: NumberService.toLocaledNumber(80000000),
     offPrice: NumberService.toLocaledNumber(72600000),
     offPercent: NumberService.calculatePercentageDecrease(80000000, 72600000),
   },
   {
-    src: "/asset/img/test.webp",
+    src: '/asset/img/test.webp',
     price: NumberService.toLocaledNumber(27000000),
     offPrice: NumberService.toLocaledNumber(20000000),
     offPercent: NumberService.calculatePercentageDecrease(27000000, 20000000),
   },
   {
-    src: "/asset/img/test.webp",
+    src: '/asset/img/test.webp',
     price: NumberService.toLocaledNumber(80000000),
     offPrice: NumberService.toLocaledNumber(72600000),
     offPercent: NumberService.calculatePercentageDecrease(80000000, 72600000),
   },
   {
-    src: "/asset/img/test.webp",
+    src: '/asset/img/test.webp',
     price: NumberService.toLocaledNumber(27000000),
     offPrice: NumberService.toLocaledNumber(20000000),
     offPercent: NumberService.calculatePercentageDecrease(27000000, 20000000),
   },
   {
-    src: "/asset/img/test.webp",
+    src: '/asset/img/test.webp',
     price: NumberService.toLocaledNumber(80000000),
     offPrice: NumberService.toLocaledNumber(72600000),
     offPercent: NumberService.calculatePercentageDecrease(80000000, 72600000),
   },
   {
-    src: "/asset/img/test.webp",
+    src: '/asset/img/test.webp',
     price: NumberService.toLocaledNumber(27000000),
     offPrice: NumberService.toLocaledNumber(20000000),
     offPercent: NumberService.calculatePercentageDecrease(27000000, 20000000),
   },
   {
-    src: "/asset/img/test.webp",
+    src: '/asset/img/test.webp',
     price: NumberService.toLocaledNumber(80000000),
     offPrice: NumberService.toLocaledNumber(72600000),
     offPercent: NumberService.calculatePercentageDecrease(80000000, 72600000),
@@ -75,10 +75,10 @@ const Slider2: FC<Slider2Props> = () => {
         setIsBeginning(swiperInstance.isBeginning);
         setIsEnd(swiperInstance.isEnd);
       };
-      swiperInstance.on("slideChange", handleSlideChange);
-      swiperInstance.on("reachEnd", () => setIsEnd(true));
+      swiperInstance.on('slideChange', handleSlideChange);
+      swiperInstance.on('reachEnd', () => setIsEnd(true));
       return () => {
-        swiperInstance.off("slideChange", handleSlideChange);
+        swiperInstance.off('slideChange', handleSlideChange);
       };
     }
   }, []);
@@ -95,16 +95,33 @@ const Slider2: FC<Slider2Props> = () => {
     <div className="!px-0.5 bg-rose-600 rounded-2xl relative">
       <ArrowBack
         className={`absolute ${
-          isEnd && "hidden"
-        } top-1/2 transform -translate-y-1/2 z-10 left-2`}
+          isEnd && '!hidden'
+        } top-1/2 transform -translate-y-1/2 z-10 left-2 `}
         onClick={prevSlide}
       />
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={2}
-        slidesPerView={4.8}
+        // slidesPerView={4.8}
         // slidesPerView={1}
         className="!py-5"
+        breakpoints={{
+          0: {
+            slidesPerView: 2.5,
+          },
+          639: {
+            slidesPerView: 3,
+          },
+          857: {
+            slidesPerView: 4.8,
+          },
+          1052: {
+            slidesPerView: 5,
+          },
+          1382: {
+            slidesPerView: 8,
+          },
+        }}
       >
         <SwiperSlide className="">
           <section className="mx-auto">
@@ -113,7 +130,7 @@ const Slider2: FC<Slider2Props> = () => {
               width={88}
               height={66}
               alt="Amazings"
-              src={"/asset/img/Amazings.svg"}
+              src={'/asset/img/Amazings.svg'}
             />
           </section>
           <section className="mx-auto">
@@ -122,7 +139,7 @@ const Slider2: FC<Slider2Props> = () => {
               width={135}
               height={111}
               alt="Amazings"
-              src={"/asset/img/box.webp"}
+              src={'/asset/img/box.webp'}
             />
             <div className="text-sm font-bold text-white flex justify-center items-center">
               <p className=" select-none">مشاهده همه</p>
@@ -134,7 +151,7 @@ const Slider2: FC<Slider2Props> = () => {
           <SwiperSlide
             key={index}
             className={`!h-auto px-4 py-2 flex flex-col ${
-              index === 0 && "rounded-s-md"
+              index === 0 && 'rounded-s-md'
             }  bg-white`}
           >
             <section className="flex justify-center items-center">
@@ -153,7 +170,7 @@ const Slider2: FC<Slider2Props> = () => {
               </p>
               <div className="w-full dir-ltr rounded-md overflow-hidden h-1 bg-neutral-300">
                 <div
-                  style={{ width: item.offPercent + "%" }}
+                  style={{ width: item.offPercent + '%' }}
                   className="h-full bg-rose-600"
                 ></div>
               </div>
@@ -169,7 +186,7 @@ const Slider2: FC<Slider2Props> = () => {
       </Swiper>
       <ArrowForward
         className={`absolute ${
-          isBeginning && "hidden"
+          isBeginning && '!hidden'
         } top-1/2 transform -translate-y-1/2 z-10 right-2`}
         onClick={nextSlide}
       />

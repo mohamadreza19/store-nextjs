@@ -1,13 +1,13 @@
-import Image from "next/image";
-import React, { createRef } from "react";
-import SwiperCore from "swiper";
-import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
-import { ArrowBack, ArrowForward } from "../button";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import Image from 'next/image';
+import React, { createRef } from 'react';
+import SwiperCore from 'swiper';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { ArrowBack, ArrowForward } from '../button';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import CustomPagination from "./CustomPagination";
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import CustomPagination from './CustomPagination';
 
 interface Slider1Props {}
 
@@ -17,10 +17,10 @@ interface Slider1State {
   allowShowArrows: boolean;
 }
 const data = [
-  "/asset/img/slider/1.webp",
-  "/asset/img/slider/2.webp",
-  "/asset/img/slider/3.webp",
-  "/asset/img/slider/4.webp",
+  '/asset/img/slider/1.webp',
+  '/asset/img/slider/2.webp',
+  '/asset/img/slider/3.webp',
+  '/asset/img/slider/4.webp',
 ];
 
 class Slider1 extends React.Component<Slider1Props, Slider1State> {
@@ -48,12 +48,12 @@ class Slider1 extends React.Component<Slider1Props, Slider1State> {
   componentDidMount(): void {
     document
       .getElementById(this.swiperId)
-      ?.addEventListener("mouseenter", (e) => {
+      ?.addEventListener('mouseenter', (e) => {
         this.setState({ ...this.state, allowShowArrows: true });
       });
     document
       .getElementById(this.swiperId)
-      ?.addEventListener("mouseleave", (e) => {
+      ?.addEventListener('mouseleave', (e) => {
         this.setState({ ...this.state, allowShowArrows: false });
       });
   }
@@ -72,17 +72,19 @@ class Slider1 extends React.Component<Slider1Props, Slider1State> {
         spaceBetween={0}
         slidesPerView={1}
         loop
-        onSlideChange={() => console.log("slide change")}
+        // onSlideChange={() => console.log('slide change')}
         dir="ltr"
       >
         {data.map((src, index) => {
           return (
             <SwiperSlide key={index}>
-              <div className="w-full h-[300px]">
+              <div className="w-full lg:h-[400px] md:h-[300px] h-[286px]">
                 <Image
+                  className="object-cover"
                   quality={100}
                   // width={"1080"}
                   // height={"300"}
+
                   alt="slider"
                   layout="fill"
                   unoptimized
@@ -94,7 +96,7 @@ class Slider1 extends React.Component<Slider1Props, Slider1State> {
         })}
         <div
           className={`${
-            !this.state.allowShowArrows && "hidden"
+            !this.state.allowShowArrows && 'hidden'
           } absolute top-3/4 right-0 transform -translate-x-1/2 -translate-y-1/2 z-10 flex gap-x-2`}
         >
           <ArrowBack onClick={this.forward} />

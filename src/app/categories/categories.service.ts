@@ -1,11 +1,12 @@
-import GlobalStoreService from "../lib/services/GlobalStoreService";
-import { CategoriesResponse } from "./interfaces";
-import { categoriesActions } from "./reducers/categories.slice";
+import GlobalStoreService from '../lib/services/GlobalStoreService';
+import { CategoriesResponse } from './interfaces';
+import { categoriesActions } from './reducers/categories.slice';
 
 class CategoriesService extends GlobalStoreService {
   // Add service methods here
 
-  private useSelect = (asHook = true) => {
+  private useSelect = (asHook: boolean) => {
+    // debugger;
     return asHook
       ? this.getUseSelector()((store) => store.categories)
       : this.getStore().categories;
@@ -21,12 +22,12 @@ class CategoriesService extends GlobalStoreService {
     this.dispatch(categoriesActions.reInitSub());
   };
 
-  getMainCategories = (asHook = true) => {
+  getMainCategories = (asHook: boolean) => {
     return this.useSelect(asHook).main;
   };
-  getSubCategories = () => {
+  getSubCategories = (asHook: boolean) => {
     // return this.getStore().categories.sub;
-    return this.getUseSelector()((state) => state.categories.sub);
+    return this.useSelect(asHook).sub;
   };
 }
 export default CategoriesService;
