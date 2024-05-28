@@ -1,17 +1,17 @@
-'use client';
+"use client";
 import React, {
   createContext,
   useContext,
   useEffect,
   useLayoutEffect,
   useMemo,
-} from 'react';
+} from "react";
 
-import AppFactory from './app.factory';
-import { AppInjectionEntities } from './interfaces';
-import { usePathname, useRouter } from 'next/navigation';
-import { LoadingService } from '@lib/services';
-import { MainNavbar } from '@lib/components/navbar';
+import AppFactory from "./app.factory";
+import { AppInjectionEntities } from "./interfaces";
+import { usePathname, useRouter } from "next/navigation";
+import { LoadingService } from "@lib/services";
+import { MainNavbar } from "@lib/components/navbar";
 
 const InjectionContext = createContext({});
 
@@ -22,7 +22,9 @@ function AppModule({ children }: { children: React.ReactNode }) {
   const loadingService = useMemo(() => new LoadingService(), []);
   const memorizedModlue = useMemo(() => AppFactory.createInstances(router), []);
   const pathname = usePathname();
-  const mainCategories = useLayoutEffect(() => {
+  const mainC = memorizedModlue.categoriesService.getMainCategories(true);
+  const mainSubC = memorizedModlue.categoriesService.getSubCategories(true);
+  useLayoutEffect(() => {
     loadingService.removePluse();
 
     return () => {
@@ -37,17 +39,13 @@ function AppModule({ children }: { children: React.ReactNode }) {
 
   return (
     <InjectionContext.Provider value={memorizedModlue}>
-      {!pathname.includes('login') && (
+      {!pathname.includes("login") && (
         <MainNavbar
           fetchSubCategoriesByParentId={
             memorizedModlue.categoriesController.fetchSubCategoriesByParentId
           }
-          mainCategories={memorizedModlue.categoriesService.getMainCategories(
-            true
-          )}
-          subCategories={memorizedModlue.categoriesService.getSubCategories(
-            true
-          )}
+          mainCategories={mainC}
+          subCategories={mainSubC}
         />
       )}
       <main>{children}</main>

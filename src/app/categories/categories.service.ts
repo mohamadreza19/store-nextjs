@@ -1,6 +1,6 @@
-import GlobalStoreService from '../lib/services/GlobalStoreService';
-import { CategoriesResponse } from './interfaces';
-import { categoriesActions } from './reducers/categories.slice';
+import GlobalStoreService from "../lib/services/GlobalStoreService";
+import { CategoriesResponse } from "./interfaces";
+import { categoriesActions } from "./reducers/categories.slice";
 
 class CategoriesService extends GlobalStoreService {
   // Add service methods here
