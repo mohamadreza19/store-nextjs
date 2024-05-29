@@ -34,6 +34,7 @@ function AppModule({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     memorizedModlue.categoriesController.fetchMainCategories();
+    memorizedModlue.usersController.fetchUserCoreInfo();
     // memorizedModlue.authController.authorizeUserBasedTokenExist();
   }, []);
 

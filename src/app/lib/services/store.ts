@@ -5,6 +5,7 @@ import { PluseLoading } from "../features/loading";
 import { product, products } from "@/app/products/reducer";
 import { categories } from "@/app/categories/reducers";
 import apiCallStatus from "../features/apiCallStatus/apiCallStatus";
+import { users } from "@/app/users/reducers";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     products,
     product,
     categories,
+    users,
   },
   devTools: true,
 });

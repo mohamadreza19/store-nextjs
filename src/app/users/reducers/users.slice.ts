@@ -1,19 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { UsersResponse } from "../interfaces";
-const initialState:UsersResponse = {
-   
-  };
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UsersCoreInfoResponse } from "../interfaces";
+const initialState: UsersCoreInfoResponse = {};
 
 const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    add(state,action){
-
+    add(state, action: PayloadAction<UsersCoreInfoResponse>) {
+      return action.payload;
     },
-    remove(state,action){
-
-    }
+    remove(state, action) {},
   },
 });
 

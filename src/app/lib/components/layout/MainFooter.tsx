@@ -1,10 +1,10 @@
-import Image from 'next/image';
-import { FC, FunctionComponent, useState } from 'react';
-import { MoveUpOutline } from '../button';
-import { FooterIcons } from '../lists';
-import { useScrollToTop } from '../../services';
-import { IoArrowDown } from 'react-icons/io5';
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import Image from "next/image";
+import { FC, FunctionComponent, useState } from "react";
+import { MoveUpOutline } from "../button";
+import { FooterIcons } from "../lists";
+import { useScrollToTop } from "../../services";
+import { IoArrowDown } from "react-icons/io5";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 interface MainFooterProps {}
 
@@ -18,7 +18,7 @@ const MainFooter: FunctionComponent<MainFooterProps> = () => {
           <div className="w-auto flex md:justify-between justify-center">
             <Image
               className="hidden md:block"
-              src={'/asset/img/persian-logo.svg'}
+              src={"/asset/img/persian-logo.svg"}
               width={113}
               height={30}
               alt=""
@@ -27,7 +27,7 @@ const MainFooter: FunctionComponent<MainFooterProps> = () => {
           </div>
           <div className="mt-3 hidden md:block">
             <p className="text-xs ">
-              تلفن پشتیبانی ۶۱۹۳۰۰۰۰ - ۰۲۱ <span className="mx-2">|</span>{' '}
+              تلفن پشتیبانی ۶۱۹۳۰۰۰۰ - ۰۲۱ <span className="mx-2">|</span>{" "}
               ۰۲۱-۹۱۰۰۰۱۰۰ <span className="mx-2">|</span> ۷ روز هفته، ۲۴ ساعته
               پاسخگوی شما هستیم
             </p>
@@ -40,29 +40,29 @@ const MainFooter: FunctionComponent<MainFooterProps> = () => {
           <CustomList
             header="با دیجی‌کالا"
             textLists={[
-              'با دیجی‌کالا',
-              'اتاق خبر دیجی‌کالا',
-              'فروش در دیجی‌کالا',
-              'فرصت‌های شغلی',
-              'تماس با دیجی‌کالا',
+              "با دیجی‌کالا",
+              "اتاق خبر دیجی‌کالا",
+              "فروش در دیجی‌کالا",
+              "فرصت‌های شغلی",
+              "تماس با دیجی‌کالا",
             ]}
           />
           <CustomList
             header="خدمات مشتریان"
             textLists={[
-              'پاسخ به پرسش‌های متداول',
-              'رویه‌های بازگرداندن کالا',
-              'شرایط استفاده',
-              'حریم خصوصی',
-              'گزارش باگ',
+              "پاسخ به پرسش‌های متداول",
+              "رویه‌های بازگرداندن کالا",
+              "شرایط استفاده",
+              "حریم خصوصی",
+              "گزارش باگ",
             ]}
           />
           <CustomList
             header="راهنمای خرید از دیجی‌کالا"
             textLists={[
-              'نحوه ثبت سفارش',
-              'رویه ارسال سفارش',
-              'شیوه‌های پرداخت',
+              "نحوه ثبت سفارش",
+              "رویه ارسال سفارش",
+              "شیوه‌های پرداخت",
             ]}
           />
           <div></div>
@@ -78,37 +78,53 @@ interface CustomListProps {
 const CustomList: FC<CustomListProps> = ({ header, textLists }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  function handleoOpenModal() {
-    setIsOpenModal(true);
-  }
-  function handleoCloseModal() {
-    setIsOpenModal(false);
-  }
+  const toggleModal = () => {
+    setIsOpenModal(!isOpenModal);
+  };
+
   return (
     <div className="w-full md:border-b-0 border-b border-gray-300 py-3 md:px-0 px-2">
       <div className="flex justify-between items-center">
-        <p className="md:text-sm  text-lg text-neutral-700 font-semibold leading-9">
+        <p className="md:text-sm text-lg text-neutral-700 font-semibold md:mb-2 leading-9">
           {header}
         </p>
-
-        {isOpenModal ? (
-          <IoIosArrowUp onClick={handleoCloseModal} size={20} />
-        ) : (
-          <IoIosArrowDown onClick={handleoOpenModal} size={20} />
-        )}
+        <button
+          onClick={toggleModal}
+          className="inline-block md:hidden focus:outline-none"
+        >
+          {isOpenModal ? (
+            <IoIosArrowUp size={20} />
+          ) : (
+            <IoIosArrowDown size={20} />
+          )}
+        </button>
       </div>
-      {isOpenModal && (
+      {/* Mobile only: show content if modal is open */}
+      <div className={`${isOpenModal ? "block" : "hidden"} md:hidden`}>
         <ul>
           {textLists.map((text, i) => (
             <li
               key={i}
-              className="md:text-xs text-sm text-neutral-500 md:font-semibold font-normal md:leading-9 leading-10 "
+              className="text-sm text-neutral-500 font-normal leading-10"
             >
               {text}
             </li>
           ))}
         </ul>
-      )}
+      </div>
+      {/* Desktop only: always show content */}
+      <div className="hidden md:block">
+        <ul className="mb-2">
+          {textLists.map((text, i) => (
+            <li
+              key={i}
+              className="md:text-xs text-neutral-500 md:font-semibold py-3"
+            >
+              {text}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

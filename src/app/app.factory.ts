@@ -8,6 +8,7 @@ import AuthController from "./auth/auth.controller";
 import AuthFactory from "./auth/auth.factory";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import CategoriesFactory from "./categories/categories.factory";
+import UsersFactory from "./users/users.factory";
 
 class AppFactory implements ModuleFactory {
   private static singletonInstance: AppInjectionEntities | null;
@@ -20,6 +21,7 @@ class AppFactory implements ModuleFactory {
         ...AuthFactory.createInstances(router),
         ...ProuctsFactory.createInstances(),
         ...CategoriesFactory.createInstances(),
+        ...UsersFactory.createInstances(),
         appService,
         appController,
       };

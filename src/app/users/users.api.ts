@@ -11,7 +11,10 @@ class UsersApiService extends ApiService {
     return result.data;
   }
   async getCoreInfo(): Promise<UsersResponse> {
-    const result = await this.$axios.get("/core-info");
+    const result = await this.queryClient.fetchQuery({
+      queryKey: ["getCoreInfo"],
+      queryFn: () => this.$axios.get("/core-info"),
+    });
 
     return result.data;
   }

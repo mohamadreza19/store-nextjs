@@ -4,12 +4,14 @@ import { ProductsInjectionEntities } from "./products/interfaces";
 import AuthController from "./auth/auth.controller";
 import { AuthInjectionEntities } from "./auth/interfaces";
 import { CategoriesInjectionEntities } from "./categories/interfaces";
+import { UsersInjectionEntities } from "./users/interfaces";
 export type AppResponse = {};
 
 export interface AppInjectionEntities
   extends ProductsInjectionEntities,
     AuthInjectionEntities,
-    CategoriesInjectionEntities {
+    CategoriesInjectionEntities,
+    UsersInjectionEntities {
   appService: AppService;
   appController: AppController;
 }
