@@ -14,6 +14,9 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "fresh-pattern": "url('/asset/img/banner/freshPattern.svg')",
       },
+      backgroundColor: {
+        general_1: "rgba(0,0,0,0.3)",
+      },
       translate: {
         "50p": "50%",
         "50-p": "-50%",

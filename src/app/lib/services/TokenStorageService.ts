@@ -14,4 +14,12 @@ export default class TokenStorageService {
   getRefreshToken() {
     return localStorage.getItem("refreshToken");
   }
+
+  setAccessTokenExpire(Timestamp: string) {
+    localStorage.setItem("expiresIn", Timestamp);
+  }
+
+  getAccessTokenExpire() {
+    return localStorage.getItem("expiresIn");
+  }
 }

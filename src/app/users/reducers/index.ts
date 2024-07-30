@@ -1,1 +1,1 @@
-export { default as users } from "./users.slice";
+export { default as user } from "./users.slice";

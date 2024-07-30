@@ -6,10 +6,14 @@ import { NextRouter } from "next/router";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { AxiosError } from "axios";
 import { AxiosErrorStatus } from "../lib/shared/interfaces";
+import UsersService from "../users/users.service";
+import UsersController from "../users/users.controller";
 
 class AuthController {
   constructor(
     private authService: AuthService,
+    private usersService: UsersService,
+    private usersController: UsersController,
     private authApiService: AuthApiService,
     private tokenStorageService: TokenStorageService,
     private alertService: AlertService,
@@ -53,8 +57,12 @@ class AuthController {
         await this.authApiService.VerifyCode(code);
 
       this.tokenStorageService.setRefreshToken(refreshToken);
-      this.tokenStorageService.setAccessToken(accessToken);
-
+      this.tokenStorageService.setAccessToken(accessToken.token);
+      this.tokenStorageService.setAccessTokenExpire(
+        String(accessToken.expiresIn)
+      );
+      this.usersService.changeAuthenticationStatus(true);
+      await this.usersController.fetchUserCoreInfo();
       this.router.push("/");
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -68,7 +76,17 @@ class AuthController {
       }
     }
   };
-
+  tokenExpireInterceptor = () => {
+    console.log("tokenExpireInterceptor");
+    const numberified = Number(this.tokenStorageService.getAccessTokenExpire());
+    const now = new Date();
+    if (!numberified || numberified < now.getMilliseconds()) {
+      this.tokenStorageService.setAccessToken("");
+      this.usersService.changeAuthenticationStatus(false);
+    } else {
+      this.usersService.changeAuthenticationStatus(true);
+    }
+  };
   authorizeUserBasedTokenExist = () => {
     if (
       this.tokenStorageService.getAccessToken() &&
@@ -78,6 +96,13 @@ class AuthController {
     } else {
       this.router.push("/login");
     }
+  };
+  handleLogOut = () => {
+    this.tokenStorageService.setAccessToken("");
+    this.tokenStorageService.setRefreshToken("");
+    this.tokenStorageService.setAccessTokenExpire("");
+
+    this.usersService.reInitial();
   };
 
   refreshOtpCode = async (email: string) => {

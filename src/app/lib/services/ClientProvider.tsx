@@ -4,7 +4,7 @@ import { Provider as InversifyProvider } from "inversify-react";
 
 import { Provider } from "react-redux";
 import store from "./store";
-import { DismissAlert, ListAlerts } from "../components";
+import { ConfirmationAlert, DismissAlert, ListAlerts } from "../components";
 import ErrorCatchService from "./ErrorCatchService";
 import PulseLoader from "../components/loading/PulseLoader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -28,6 +28,7 @@ function ClientProvider(props: ClientProviderProps) {
           {props.children}
           <ListAlerts />
           <DismissAlert />
+          <ConfirmationAlert />
           <PulseLoader />
         </Provider>
       </QueryClientProvider>

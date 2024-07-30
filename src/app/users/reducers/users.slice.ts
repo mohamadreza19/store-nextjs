@@ -1,18 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UsersCoreInfoResponse } from "../interfaces";
-const initialState: UsersCoreInfoResponse = {};
+import { IUser, UsersCoreInfoResponse } from "../interfaces";
+const initialState: IUser = {
+  isAuthenticated: false,
+};
 
-const usersSlice = createSlice({
+const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
     add(state, action: PayloadAction<UsersCoreInfoResponse>) {
-      return action.payload;
+      state.coreInfo = action.payload;
     },
-    remove(state, action) {},
+    changeAuthenticationStatus(state, action: PayloadAction<boolean>) {
+      state.isAuthenticated = action.payload;
+    },
+    reInitial(state) {
+      return initialState;
+    },
   },
 });
 
-export const usersActions = usersSlice.actions;
+export const userActions = userSlice.actions;
 
-export default usersSlice.reducer;
+export default userSlice.reducer;

@@ -1,4 +1,8 @@
-import { ListAlerts, DismissAlert } from "@lib/features/alert";
+import {
+  ListAlerts,
+  DismissAlert,
+  ConfirmationAlert,
+} from "@lib/features/alert";
 import GlobalStoreService from "./GlobalStoreService";
 
 export default class AlertService extends GlobalStoreService {
@@ -15,8 +19,14 @@ export default class AlertService extends GlobalStoreService {
   addDismissAlert(payload: DismissAlert.AddPayload) {
     this.dispatch(DismissAlert.Actions.add(payload));
   }
+  addConfirmationAlert = (payload: ConfirmationAlert.AddPayload) => [
+    this.dispatch(ConfirmationAlert.Actions.add(payload)),
+  ];
   getDismissAlert() {
     return this.getUseSelector()((state) => state.dismiss_alert);
+  }
+  getConfirmationAlert() {
+    return this.getUseSelector()((state) => state.confirmation_alert);
   }
   removeDismissAlert() {
     this.dispatch(DismissAlert.Actions.remove());

@@ -4,6 +4,8 @@ import TokenStorageService from "../TokenStorageService";
 import LoadingService from "../LoadingService";
 import GlobalStoreService from "../GlobalStoreService";
 import { QueryClient } from "@tanstack/react-query";
+import UsersService from "@/app/users/users.service";
+import { AccessToken } from "@/app/auth/interfaces";
 
 type UrlExtension =
   | "auth"
@@ -33,6 +35,7 @@ class ApiService {
   private tokenStorageService = new TokenStorageService();
   private loadingService = new LoadingService();
   private globalStoreService = new GlobalStoreService();
+  private usersService = new UsersService();
 
   constructor(urlExtension: UrlExtension) {
     this.$axios = axios.create({
@@ -41,6 +44,7 @@ class ApiService {
         Authorization: "Bearer " + this.tokenStorageService.getAccessToken(),
       },
     });
+
     this.$axios.interceptors.request.use(
       (config) => {
         this.globalStoreService.addApiStatus({
@@ -69,9 +73,13 @@ class ApiService {
       },
       async (error: AxiosError) => {
         if (error.response?.status === HttpStatus.UNAUTHORIZED) {
-          const token = await this.refreshToken();
-          if (token) {
-            this.tokenStorageService.setAccessToken(token);
+          // this.usersService.changeAuthenticationStatus(false);
+          const accessToken = await this.refreshToken();
+          if (accessToken && accessToken.token) {
+            this.tokenStorageService.setAccessToken(accessToken.token);
+            this.tokenStorageService.setAccessTokenExpire(
+              String(accessToken.expiresIn)
+            );
             window.location.reload();
           } else {
             this.tokenStorageService.setAccessToken("");
@@ -93,7 +101,7 @@ class ApiService {
       }
     );
   }
-  private async refreshToken(): Promise<string | undefined> {
+  private async refreshToken(): Promise<AccessToken | undefined> {
     try {
       const result = await axios.get(
         config.BASE_URL +

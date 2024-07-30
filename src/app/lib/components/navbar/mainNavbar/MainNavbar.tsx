@@ -1,18 +1,19 @@
-import Image from 'next/image';
-import { FC, FunctionComponent, useEffect, useRef } from 'react';
-import { MainSearchInput } from '../../form';
-import { NavbarAuthBtn } from '../../button';
+import Image from "next/image";
+import { FC, FunctionComponent, useEffect, useRef } from "react";
+import { MainSearchInput } from "../../form";
+import { NavbarAuthBtn, PersionAuthenticated } from "../../button";
 
-import { LuShoppingCart } from 'react-icons/lu';
-import { CiBurger, CiPercent, CiShoppingBasket } from 'react-icons/ci';
-import { MdMenu } from 'react-icons/md';
-import { IoMenu } from 'react-icons/io5';
-import MegaMenu from './megaMenu/MegaMenu';
-import { BsPostcardHeart } from 'react-icons/bs';
-import Navitem from './Navitem';
-import { useRouter } from 'next/navigation';
-import { Category } from '@/app/categories/interfaces';
-import { useScrollThreshold, useScrollToTop } from '@/app/lib/services';
+import { LuShoppingCart } from "react-icons/lu";
+import { CiBurger, CiPercent, CiShoppingBasket } from "react-icons/ci";
+import { MdMenu } from "react-icons/md";
+import { IoMenu } from "react-icons/io5";
+import MegaMenu from "./megaMenu/MegaMenu";
+import { BsPostcardHeart } from "react-icons/bs";
+import Navitem from "./Navitem";
+import { useRouter } from "next/navigation";
+import { Category } from "@/app/categories/interfaces";
+import { useScrollThreshold, useScrollToTop } from "@/app/lib/services";
+import { useAppInjection } from "@/app/app.module";
 
 type Props = {
   mainCategories: Category[];
@@ -25,21 +26,27 @@ const MainNavbar: FunctionComponent<Props> = (props) => {
   const headerRef = useRef<HTMLDivElement>(null);
   const hasCrossedThreshold = useScrollThreshold(300, () => {});
   const scroll = useScrollToTop();
-
+  const { usersService, authController } = useAppInjection();
+  const isUserAuthenticated = usersService.getAuthenticationStatus(true);
+  const userInfo = usersService.getUserCoreInfo(true);
   const router = useRouter();
   function handleNavigateToLogin() {
-    router.push('/login');
+    router.push("/login");
   }
   function handleOpenFilterScreen() {
     scroll();
-    filterScreenRef.current?.classList.add('opacity-30');
-    filterScreenRef.current?.classList.remove('invisible');
+    filterScreenRef.current?.classList.add("opacity-30");
+    filterScreenRef.current?.classList.remove("invisible");
   }
   function handleCloseFilterScreen() {
-    filterScreenRef.current?.classList.add('invisible');
-    filterScreenRef.current?.classList.remove('opacity-30');
+    filterScreenRef.current?.classList.add("invisible");
+    filterScreenRef.current?.classList.remove("opacity-30");
   }
-
+  function handleClickLogout() {
+    authController.handleLogOut();
+  }
+  console.log({ isUserAuthenticated });
+  console.log({ userInfo });
   return (
     <>
       <div className="md:h-[113px] sm:h-[70px] mb-2"></div>
@@ -61,7 +68,14 @@ const MainNavbar: FunctionComponent<Props> = (props) => {
               />
             </section>
             <section className={`hidden md:flex  items-center ms-2`}>
-              <NavbarAuthBtn onClick={handleNavigateToLogin} />
+              {isUserAuthenticated && userInfo ? (
+                <PersionAuthenticated
+                  onClickLogout={handleClickLogout}
+                  username={userInfo.username}
+                />
+              ) : (
+                <NavbarAuthBtn onClick={handleNavigateToLogin} />
+              )}
 
               <div className="w-[1px] h-[25px] bg-gray-300 ms-3"></div>
 
@@ -73,7 +87,7 @@ const MainNavbar: FunctionComponent<Props> = (props) => {
           </div>
           <div
             className={`${
-              hasCrossedThreshold && '!hidden'
+              hasCrossedThreshold && "!hidden"
             }  hidden md:flex gap-x-3 h-full  items-center`}
           >
             <Navitem

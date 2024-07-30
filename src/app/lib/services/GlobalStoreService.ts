@@ -6,11 +6,11 @@ import { ApiCallStatus } from "../shared/interfaces";
 import { apiCallStatusSliceActions } from "../features/apiCallStatus/apiCallStatus";
 
 type UseSelectorFunction = () => TypedUseSelectorHook<RootState>;
-
+type Segments = keyof RootState;
 export default class GlobalStoreService {
-  public dispatch = store.dispatch;
-  public getUseSelector: UseSelectorFunction = () => useSelector;
-  public getStore = () => store.getState();
+  protected dispatch = store.dispatch;
+  protected getUseSelector: UseSelectorFunction = () => useSelector;
+  protected getStore = () => store.getState();
 
   public addApiStatus(payload: ApiCallStatus) {
     this.dispatch(apiCallStatusSliceActions.add(payload));

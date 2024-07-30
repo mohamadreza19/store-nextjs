@@ -9,4 +9,5 @@ export { default as isPathInArray } from "./isPathInArray";
 export { default as NumberService } from "./NumberService";
 export { default as useScrollThreshold } from "./useScrollThreshold";
 export { default as useScrollToTop } from "./useScrollToTop";
+export { default as useModal } from "./useModal";
 export { default as store } from "./store";

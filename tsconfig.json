@@ -3,6 +3,8 @@
     "baseUrl": ".", // Set the base directory here
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,

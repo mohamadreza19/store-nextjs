@@ -9,7 +9,8 @@ class UsersController {
   fetchUserCoreInfo = async () => {
     try {
       const result = await this.usersApiService.getCoreInfo();
-      console.log(result);
+
+      this.usersService.setCoreInfo(result);
     } catch (error) {
       console.log(error);
     }

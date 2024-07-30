@@ -1,16 +1,16 @@
 import ApiService from "../lib/services/api/ApiService";
-import { UsersResponse } from "./interfaces";
+import { UsersCoreInfoResponse } from "./interfaces";
 
 class UsersApiService extends ApiService {
   constructor() {
     super("users");
   }
-  async getUsers(): Promise<UsersResponse> {
+  async getUsers(): Promise<UsersCoreInfoResponse> {
     const result = await this.$axios.get("/");
 
     return result.data;
   }
-  async getCoreInfo(): Promise<UsersResponse> {
+  async getCoreInfo(): Promise<UsersCoreInfoResponse> {
     const result = await this.queryClient.fetchQuery({
       queryKey: ["getCoreInfo"],
       queryFn: () => this.$axios.get("/core-info"),

@@ -6,8 +6,12 @@ export type AuthSendVerifyCodeResponse = {
   message: string;
   userRegistered: boolean;
 };
+export type AccessToken = {
+  token: string;
+  expiresIn: number;
+};
 export type AuthVerifyCodeResponse = {
-  accessToken: string;
+  accessToken: AccessToken;
   refreshToken: string;
 };
 

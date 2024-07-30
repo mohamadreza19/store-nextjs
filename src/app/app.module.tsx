@@ -24,6 +24,7 @@ function AppModule({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const mainC = memorizedModlue.categoriesService.getMainCategories(true);
   const mainSubC = memorizedModlue.categoriesService.getSubCategories(true);
+  const userCoreInfo = memorizedModlue.usersService.getUserCoreInfo(true);
   useLayoutEffect(() => {
     loadingService.removePluse();
 
@@ -35,8 +36,11 @@ function AppModule({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     memorizedModlue.categoriesController.fetchMainCategories();
     memorizedModlue.usersController.fetchUserCoreInfo();
-    // memorizedModlue.authController.authorizeUserBasedTokenExist();
+    memorizedModlue.authController.authorizeUserBasedTokenExist();
   }, []);
+  useEffect(() => {
+    memorizedModlue.authController.tokenExpireInterceptor();
+  }, [pathname]);
 
   return (
     <InjectionContext.Provider value={memorizedModlue}>
